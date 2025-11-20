@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINA - 美容サロン予約管理アプリ モックアップ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #fef5f5 0%, #fef9f5 100%);
+            color: #5a5a5a;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .screen-section {
+            margin-bottom: 60px;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(255, 192, 203, 0.1);
+        }
+        
+        .section-title {
+            font-size: 24px;
+            color: #d4a574;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .section-subtitle {
+            font-size: 14px;
+            color: #9a9a9a;
+            margin-bottom: 30px;
+        }
+        
+        .mockup-container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        
+        .phone-frame {
+            width: 375px;
+            min-height: 667px;
+            background: white;
+            border: 2px solid #e8e8e8;
+            border-radius: 30px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .phone-header {
+            height: 30px;
+            background: #f9f9f9;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #999;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #d4a574;
+            text-align: center;
+            margin: 20px 0;
+            letter-spacing: 3px;
+        }
+        
+        .menu-card {
+            background: linear-gradient(135deg, #fff5f0 0%, #fffbf8 100%);
+            border: 1px solid #f0e0d0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 165, 116, 0.2);
+        }
+        
+        .menu-title {
+            font-size: 18px;
+            color: #6b5b5b;
+            margin-bottom: 8px;
+        }
+        
+        .menu-detail {
+            font-size: 13px;
+            color: #9a9a9a;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #f4b4a4 0%, #d4a574 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 15px 30px;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(212, 165, 116, 0.3);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #d4a574;
+            border: 2px solid #d4a574;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin: 20px 0;
+        }
+        
+        .day-header {
+            text-align: center;
+            font-size: 12px;
+            color: #9a9a9a;
+            padding: 5px;
+        }
+        
+        .time-slot {
+            background: #f9f9f9;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 8px 5px;
+            text-align: center;
+            font-size: 11px;
+            color: #6b5b5b;
+            cursor: pointer;
+        }
+        
+        .time-slot.available {
+            background: #fff5f0;
+            border-color: #d4a574;
+            color: #d4a574;
+        }
+        
+        .time-slot.unavailable {
+            background: #f0f0f0;
+            color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            font-size: 14px;
+            color: #6b5b5b;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e8e8e8;
+            border-radius: 10px;
+            font-size: 14px;
+            background: #fafafa;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #a8e6cf 0%, #7fcdbb 100%);
+            border-radius: 50%;
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border: 1px solid #f0e0d0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .dashboard-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #9a9a9a;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            color: #d4a574;
+            font-weight: bold;
+        }
+        
+        .reservation-card {
+            background: #fafafa;
+            border-left: 4px solid #d4a574;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .status-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-canceled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .photo-upload-area {
+            background: #fafafa;
+            border: 2px dashed #d4a574;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .photo-thumb {
+            aspect-ratio: 1;
+            background: #f0f0f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .week-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 10px;
+            background: #fafafa;
+            border-radius: 10px;
+        }
+        
+        .nav-btn {
+            padding: 8px 15px;
+            background: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #6b5b5b;
+        }
+        
+        .description {
+            background: #f9f5f0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #7a6a6a;
+        }
+        
+        @media (max-width: 768px) {
+            .phone-frame {
+                width: 100%;
+                max-width: 375px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; color: #d4a574; margin-bottom: 40px;">LINA - 美容サロン予約管理アプリ モックアップ</h1>
+        
+        <!-- ユーザー側画面 -->
+        <h2 style="color: #6b5b5b; margin-bottom: 30px;">◆ 1. ユーザー側（来店者）画面</h2>
+        
+        <!-- (1) 予約トップページ -->
+        <div class="screen-section">
+            <h3 class="section-title">■ (1) 予約トップページ</h3>
+            <p class="section-subtitle">LINEリッチメニューからアクセスする最初の画面</p>
+            
+            <div class="mockup-container">
+                <div class="phone-frame">
+                    <div class="phone-header">9:41 AM ━━━━━━━━━━━━━━━━━━ 🔋</div>
+                    
+                    <div class="logo">LINA</div>
+                    
+                    <p style="text-align: center; color: #9a9a9a; font-size: 14px; margin-bottom: 25px;">
+                        メニューを選択してください
+                    </p>
+                    
+                    <div class="menu-card">
+                        <div class="menu-title">👁 眉毛ワックス</div>
+                        <div class="menu-detail">
+                            <span>所要時間: 30分</span>
+                            <span>¥3,500</span>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-card">
+                        <div class="menu-title">👁 まつげパーマ</div>
+                        <div class="menu-detail">
+                            <span>所要時間: 60分</span>
+                            <span>¥5,000</span>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-card">
+                        <div class="menu-title">💅 ネイル</div>
+                        <div class="menu-detail">
+                            <span>所要時間: 90分</span>
+                            <span>¥7,000</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-primary">選択したメニューを予約する</button>
+                    
+                    <div class="description">
+                        ※ 予約は仮予約となります<br>
+                        ※ 確定連絡をLINEでお送りします
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- (2) 日時選択画面 -->
+        <div class="screen-section">
+            <h3 class="section-title">■ (2) 日時選択画面（1週間表示UI）</h3>
+            <p class="section-subtitle">選択したメニューの予約可能な日時を選択</p>
+            
+            <div class="mockup-container">
+                <div class="phone-frame">
+                    <div class="phone-header">9:41 AM ━━━━━━━━━━━━━━━━━━ 🔋</div>
+                    
+                    <div style="background: #fff5f0; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                        <div style="font-size: 16px; color: #6b5b5b; margin-bottom: 5px;">選択中のメニュー</div>
+                        <div style="font-size: 14px; color: #d4a574; font-weight: bold;">眉毛ワックス（30分）</div>
+                    </div>
+                    
+                    <div class="week-nav">
+                        <button class="nav-btn">＜ 前の週</button>
+                        <span style="font-weight: bold; color: #6b5b5b;">11/18 - 11/24</span>
+                        <button class="nav-btn">次の週 ＞</button>
+                    </div>
+                    
+                    <div class="calendar-grid">
+                        <div class="day-header">月</div>
+                        <div class="day-header">火</div>
+                        <div class="day-header">水</div>
+                        <div class="day-header">木</div>
+                        <div class="day-header">金</div>
+                        <div class="day-header">土</div>
+                        <div class="day-header">日</div>
+                        
+                        <div class="time-slot unavailable">10:00</div>
+                        <div class="time-slot available">10:00</div>
+                        <div class="time-slot available">10:00</div>
+                        <div class="time-slot unavailable">10:00</div>
+                        <div class="time-slot available">10:00</div>
+                        <div class="time-slot unavailable">-</div>
+                        <div class="time-slot unavailable">-</div>
+                        
+                        <div class="time-slot available">11:00</div>
+                        <div class="time-slot unavailable">11:00</div>
+                        <div class="time-slot available">11:00</div>
+                        <div class="time-slot available">11:00</div>
+                        <div class="time-slot unavailable">11:00</div>
+                        <div class="time-slot available">11:00</div>
+                        <div class="time-slot unavailable">-</div>
+                        
+                        <div class="time-slot unavailable">14:00</div>
+                        <div class="time-slot available">14:00</div>
+                        <div class="time-slot unavailable">14:00</div>
+                        <div class="time-slot available">14:00</div>
+                        <div class="time-slot available">14:00</div>
+                        <div class="time-slot available">14:00</div>
+                        <div class="time-slot unavailable">-</div>
+                        
+                        <div class="time-slot available">15:00</div>
+                        <div class="time-slot available">15:00</div>
+                        <div class="time-slot available">15:00</div>
+                        <div class="time-slot unavailable">15:00</div>
+                        <div class="time-slot available">15:00</div>
+                        <div class="time-slot unavailable">15:00</div>
+                        <div class="time-slot unavailable">-</div>
+                    </div>
+                    
+                    <div class="description">
+                        ● 予約可能　● 予約不可<br>
+                        ※ 日時をタップして選択してください
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- (3) 仮予約確認ページ -->
+        <div class="screen-section">
+            <h3 class="section-title">■ (3) 仮予約確認ページ</h3>
+            <p class="section-subtitle">選択内容の最終確認画面</p>
+            
+            <div class="mockup-container">
+                <div class="phone-frame">
+                    <div class="phone-header">9:41 AM ━━━━━━━━━━━━━━━━━━ 🔋</div>
+                    
+                    <h2 style="text-align: center; color: #6b5b5b; margin: 20px 0;">予約内容の確認</h2>
+                    
+                    <div class="dashboard-card">
+                        <div class="dashboard-stat">
+                            <span class="stat-label">日時</span>
+                            <span style="font-size: 16px; color: #6b5b5b; font-weight: bold;">11月20日(水) 14:00</span>
+                        </div>
+                        <div class="dashboard-stat">
+                            <span class="stat-label">メニュー</span>
+                            <span style="font-size: 16px; color: #6b5b5b;">眉毛ワックス</span>
+                        </div>
+                        <div class="dashboard-stat">
+                            <span class="stat-label">所要時間</span>
+                            <span style="font-size: 16px; color: #6b5b5b;">30分</span>
+                        </div>
+                        <div class="dashboard-stat">
+                            <span class="stat-label">料金</span>
+                            <span style="font-size: 18px; color: #d4a574; font-weight: bold;">¥3,500</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">お名前</label>
+                        <input type="text" class="form-input" placeholder="※LINEログイン済みの場合は自動入力" value="山田 花子">
+                    </div>
+                    
+                    <button class="btn-primary">仮予約する</button>
+                    
+                    <div class="description">
+                        <strong>ご注意</strong><br>
+                        • この時点では仮予約となります<br>
+                        • サロンからの確定連絡をお待ちください<br>
+                        • 確定連絡はLINEでお送りします
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- (4) 仮予約完了ページ -->
+        <div class="screen-section">
+            <h3 class="section-title">■ (4) 仮予約完了ページ</h3>
+            <p class="section-subtitle">仮予約が完了したことを伝える画面</p>
+            
+            <div class="mockup-container">
+                <div class="phone-frame">
+                    <div class="phone-header">9:41 AM ━━━━━━━━━━━━━━━━━━ 🔋</div>
+                    
+                    <div style="padding: 40px 20px; text-align: center;">
+                        <div class="success-icon">✓</div>
+                        
+                        <h2 style="color: #6b5b5b; margin: 20px 0;">仮予約を受け付けました</h2>
+                        
+                        <p style="color: #9a9a9a; margin-bottom: 30px;">
+                            LINEに通知を送信しました<br>
+                            サロンからの確定連絡をお待ちください
+                        </p>
+                        
+                        <div class="dashboard-card" style="text-align: left;">
+                            <h4 style="color: #d4a574; margin-bottom: 10px;">予約内容</h4>
+                            <p style="font-size: 14px; color: #6b5b5b; line-height: 1.8;">
+                                日時: 11月20日(水) 14:00<br>
+                                メニュー: 眉毛ワックス<br>
+                                料金: ¥3,500
+                            </p>
+                        </div>
+                        
+                        <button class="btn-primary">LINEに戻る</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- オーナー側画面 -->
+        <h2 style="color: #6b5b5b; margin: 40px 0 30px;">◆ 2. オーナー側（管理画面）</h2>
+        
+        <!-- (5) ダッシュボード -->
+        <div class="screen-section">
+            <h3 class="section-title">■ (5) ダッシュボード</h3>
+            <p class="section-subtitle">管理画面のトップページ</p>
+            
+            <div class="mockup-container">
+                <div class="phone-frame">
+                    <div class="phone-header">9:41 AM ━━━━━━━━━━━━━━━━━━ 🔋</div>
+                    
+                    <div class="logo">LINA Admin</div>
+                    
+                    <div class="dashboard-card">
+                        <h4 style="color: #d4a574; margin-bottom: 15px;">今日の予約</h4>
+                        <div class="dashboard-stat">
+                            <span class="stat-label">予約件数</span>
+                            <span class="stat-value">5件</span>
+                        </div>
+                        
+                        <div class="reservation-card">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <strong style="color: #6b5b5b;">10:00 山田様</strong>
+                                <span class="status-tag status-confirmed">confirmed</span>
+                            </div>
+                            <div style="font-size: 13px; color: #9a9a9a;">眉毛ワックス</div>
+                        </div>
+                        
+                        <div class="reservation-card">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <strong style="color: #6b5b5b;">14:00 佐藤様</strong>
+                                <span class="status-tag status-pending">pending</span>
+                            </div>
+                            <div style="font-size: 13px; color: #9a9a9a;">まつげパーマ</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h4 style="color: #d4a574; margin-bottom: 15px;">今週の統計</h4>
+                        <div class="dashboard-stat">
+                            <span class="stat-label">総予約数</span>
+                            <span class="stat-value">23件</span>
+                        </div>
+                        <div class="dashboard-stat">
+                            <span class="stat-label">キャンセル率</span>
+                            <span class="stat-value">8.7%</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;">
+                        <button class="btn-secondary">📋 予約管理</button>
+                        <button class="btn-secondary">📝 施術記録</button>
+                        <button class="btn-secondary">⚙️ メニュー管理</button>
+                        <button class="btn-secondary">📊 レポート</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- (6) 予約一覧 -->
+        <div class="screen-section">
+            <h3 class="section-title">■ (6) 予約一覧</h3>
+            <p class="section-subtitle">予約の一覧表示とフィルタリング</p>
+            
+            <div class="mockup-container">
+                <div class="phone-frame">
+                    <div class="phone-header">9:41 AM ━━━━━━━━━━━━━━━━━━ 🔋</div>
+                    
+                    <h2 style="color: #6b5b5b; margin: 20px 0;">予約一覧</h2>
+                    
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <button class="btn-secondary" style="padding: 8px 15px; font-size: 12px;">仮予約</button>
+                        <button class="btn-secondary" style="padding: 8px 15px; font-size: 12px;">本予約</button>
+                        <button class="btn-secondary" style="padding: 8px 15px; font-size: 12px;">取消</button>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                        <span style="font-size: 14px; color: #6b5b5b;">2024年11月20日</span>
+                        <div>
+                            <button class="nav-btn" style="padding: 5px 10px; font-size: 12px;">📅</button>
+                            <button class="nav-btn" style="padding: 5px 10px; font-size: 12px;">📋</button>
+                        </div>
+                    </div>
+                    
+                    <div class="reservation-card" style="cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <div style="font-size: 16px; color: #6b5b5b; font-weight: bold; margin-bottom: 5px;">
+                                    山田 花子様
+                                </div>
+                                <div style="font-size: 14px; color: #9a9a9a;">
+                                    10:00 - 10:30<br>
+                                    眉毛ワックス
+                                </div>
+                            </div>
+                            <span class="status-tag status-confirmed">confirmed</span>
+                        </div>
+                    </div>
+                    
+                    <div class="reservation-card" style="cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <div style="font-size: 16px; color: #6b5b5b; font-weight: bold; margin-bottom: 5px;">
+                                    佐藤 美咲様
+                                </div>
+                                <div style="font-size: 14px; color: #9a9a9a;">
+                                    14:00 - 15:00<br>
+                                    まつげパーマ
+                                </div>
+                            </div>
+                            <span class="status-tag status-pending">pending</span>
+                        </div>
+                    </div>
+                    
+                    <div class="reservation-card" style="cursor: pointer;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <div style="font-size: 16px; color: #6b5b5b; font-weight: bold; margin-bottom: 5px;">
+                                    鈴木 愛様
+                                </div>
+                                <div style="font-size: 14px; color: #9a9a9a;">
+                                    15:30 - 17:00<br>
+                                    ネイル
+                                </div>
+                            </div>
+                            <span class="status-tag status-canceled">canceled</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- (7) 予約詳細画面 -->
+        <div class="screen-section">
+            <h3 class="section-title">■ (7) 予約詳細画面</h3>
+            <p class="section-subtitle">個別の予約詳細と操作ボタン</p>
+            
+            <div class="mockup-container">
+                <div class="phone-frame">
+                    <div class="phone-header">9:41 AM ━━━━━━━━━━━━━━━━━━ 🔋</div>
+                    
+                    <div style="display: flex; align-items: center; margin: 20px 0;">
+                        <span style="margin-right: 10px; cursor: pointer;">← </span>
+                        <h2 style="color: #6b5b5b;">予約詳細</h2>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                            <h3 style="color: #6b5b5b;">佐藤 美咲様</h3>
+                            <span class="status-tag status-pending">pending</span>
+                        </div>
+                        
+                        <div style="border-top: 1px solid #f0e0d0; padding-top: 15px;">
+                            <div class="dashboard-stat">
+                                <span class="stat-label">LINE名</span>
+                                <span style="color: #6b5b5b;">佐藤みさき</span>
+                            </div>
+                            <div class="dashboard-stat">
+                                <span class="stat-label">予約日時</span>
+                                <span style="color: #6b5b5b;">2024年11月20日 14:00</span>
+                            </div>
+                            <div class="dashboard-stat">
+                                <span class="stat-label">メニュー</span>
+                                <span style="color: #6b5b5b;">まつげパーマ</span>
+                            </div>
+                            <div class="dashboard-stat">
+                                <span class="stat-label">所要時間</span>
+                                <span style="color: #6b5b5b;">60分</span>
+                            </div>
+                            <div class="dashboard-stat">
+                                <span class="stat-label">料金</span>
+                                <span style="color: #d4a574; font-weight: bold;">¥5,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h4 style="color: #d4a574; margin-bottom: 10px;">通知内容プレビュー</h4>
+                        <div style="background: #f9f9f9; padding: 10px; border-radius: 8px; font-size: 13px; color: #6b5b5b;">
+                            【予約確定のお知らせ】<br>
+                            佐藤様のご予約を確定いたしました。<br>
+                            日時: 11月20日 14:00<br>
+                            メニュー: まつげパーマ
+                        </div>
+                    </div>
+                    
+                    <button class="btn-primary" style="background: linear-gradient(135deg, #7fcdbb 0%, #41b699 100%);">
+                        ✓ 本予約確定
+                    </button>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                        <button class="btn-secondary">仮予約はがし</button>
+                        <button class="btn-secondary" style="color: #dc3545; border-color: #dc3545;">予約削除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- (8) 施術記録登録画面 -->
+        <div class="screen-section">
+            <h3 class="section-title">■ (8) 施術記録（Before/After）登録画面</h3>
+            <p class="section-subtitle">施術の記録を写真と動画で保存</p>
+            
+            <div class="mockup-container">
+                <div class="phone-frame" style="min-height: 800px;">
+                    <div class="phone-header">9:41 AM ━━━━━━━━━━━━━━━━━━ 🔋</div>
+                    
+                    <h2 style="color: #6b5b5b; margin: 20px 0;">施術記録登録</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">顧客名</label>
+                        <select class="form-input">
+                            <option>山田 花子様</option>
+                            <option>佐藤 美咲様</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Before写真（最大5枚）</label>
+                        <div class="photo-upload-area">
+                            <div style="font-size: 24px; color: #d4a574; margin-bottom: 10px;">📷</div>
+                            <div style="color: #9a9a9a; font-size: 14px;">タップして写真を選択</div>
+                        </div>
+                        <div class="photo-grid">
+                            <div class="photo-thumb">写真1</div>
+                            <div class="photo-thumb">写真2</div>
+                            <div class="photo-thumb">+</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">After写真（最大5枚）</label>
+                        <div class="photo-upload-area">
+                            <div style="font-size: 24px; color: #d4a574; margin-bottom: 10px;">📷</div>
+                            <div style="color: #9a9a9a; font-size: 14px;">タップして写真を選択</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">動画（30秒×2本まで）</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="photo-upload-area" style="padding: 20px;">
+                                <div style="font-size: 20px; color: #d4a574;">🎥</div>
+                                <div style="color: #9a9a9a; font-size: 12px;">動画1</div>
+                            </div>
+                            <div class="photo-upload-area" style="padding: 20px;">
+                                <div style="font-size: 20px; color: #d4a574;">🎥</div>
+                                <div style="color: #9a9a9a; font-size: 12px;">動画2</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">メモ（デザイン・注意点など）</label>
+                        <textarea class="form-input" rows="4" placeholder="施術内容、使用カラー、次回の注意点など"></textarea>
+                    </div>
+                    
+                    <button class="btn-primary">記録を保存する</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- (9) 施術記録一覧 -->
+        <div class="screen-section">
+            <h3 class="section-title">■ (9) 施術記録一覧（顧客別）</h3>
+            <p class="section-subtitle">顧客ごとの施術履歴をサムネイルで表示</p>
+            
+            <div class="mockup-container">
+                <div class="phone-frame">
+                    <div class="phone-header">9:41 AM ━━━━━━━━━━━━━━━━━━ 🔋</div>
+                    
+                    <h2 style="color: #6b5b5b; margin: 20px 0;">施術記録一覧</h2>
+                    
+                    <div class="form-group">
+                        <select class="form-input">
+                            <option>山田 花子様の記録</option>
+                            <option>佐藤 美咲様の記録</option>
+                        </select>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                        <div style="cursor: pointer;">
+                            <div style="aspect-ratio: 1; background: linear-gradient(135deg, #fff5f0 0%, #fef9f5 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; border: 1px solid #f0e0d0;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 32px; color: #d4a574;">👁</div>
+                                    <div style="font-size: 12px; color: #9a9a9a;">Before/After</div>
+                                </div>
+                            </div>
+                            <div style="font-size: 13px; color: #6b5b5b;">2024.11.15</div>
+                            <div style="font-size: 12px; color: #9a9a9a;">眉毛ワックス</div>
+                        </div>
+                        
+                        <div style="cursor: pointer;">
+                            <div style="aspect-ratio: 1; background: linear-gradient(135deg, #fff5f0 0%, #fef9f5 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; border: 1px solid #f0e0d0;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 32px; color: #d4a574;">👁</div>
+                                    <div style="font-size: 12px; color: #9a9a9a;">Before/After</div>
+                                </div>
+                            </div>
+                            <div style="font-size: 13px; color: #6b5b5b;">2024.10.20</div>
+                            <div style="font-size: 12px; color: #9a9a9a;">まつげパーマ</div>
+                        </div>
+                        
+                        <div style="cursor: pointer;">
+                            <div style="aspect-ratio: 1; background: linear-gradient(135deg, #fff5f0 0%, #fef9f5 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; border: 1px solid #f0e0d0;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 32px; color: #d4a574;">💅</div>
+                                    <div style="font-size: 12px; color: #9a9a9a;">Before/After</div>
+                                </div>
+                            </div>
+                            <div style="font-size: 13px; color: #6b5b5b;">2024.09.15</div>
+                            <div style="font-size: 12px; color: #9a9a9a;">ネイル</div>
+                        </div>
+                        
+                        <div style="cursor: pointer;">
+                            <div style="aspect-ratio: 1; background: linear-gradient(135deg, #fff5f0 0%, #fef9f5 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; border: 1px solid #f0e0d0;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 32px; color: #d4a574;">👁</div>
+                                    <div style="font-size: 12px; color: #9a9a9a;">Before/After</div>
+                                </div>
+                            </div>
+                            <div style="font-size: 13px; color: #6b5b5b;">2024.08.10</div>
+                            <div style="font-size: 12px; color: #9a9a9a;">眉毛ワックス</div>
+                        </div>
+                    </div>
+                    
+                    <div class="description" style="margin-top: 30px;">
+                        タップして詳細を表示
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- (10) 施術記録詳細 -->
+        <div class="screen-section">
+            <h3 class="section-title">■ (10) 施術記録詳細</h3>
+            <p class="section-subtitle">Before/Afterの詳細表示</p>
+            
+            <div class="mockup-container">
+                <div class="phone-frame" style="min-height: 800px;">
+                    <div class="phone-header">9:41 AM ━━━━━━━━━━━━━━━━━━ 🔋</div>
+                    
+                    <div style="display: flex; align-items: center; margin: 20px 0;">
+                        <span style="margin-right: 10px; cursor: pointer;">← </span>
+                        <h2 style="color: #6b5b5b;">施術記録詳細</h2>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <h3 style="color: #6b5b5b;">山田 花子様</h3>
+                            <span style="color: #9a9a9a; font-size: 14px;">2024.11.15</span>
+                        </div>
+                        <div style="color: #d4a574; font-size: 14px;">眉毛ワックス</div>
+                    </div>
+                    
+                    <div style="margin: 20px 0;">
+                        <h4 style="color: #6b5b5b; margin-bottom: 10px;">Before</h4>
+                        <div class="photo-grid">
+                            <div class="photo-thumb" style="aspect-ratio: 1;">写真1</div>
+                            <div class="photo-thumb" style="aspect-ratio: 1;">写真2</div>
+                            <div class="photo-thumb" style="aspect-ratio: 1;">写真3</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin: 20px 0;">
+                        <h4 style="color: #6b5b5b; margin-bottom: 10px;">After</h4>
+                        <div class="photo-grid">
+                            <div class="photo-thumb" style="aspect-ratio: 1;">写真1</div>
+                            <div class="photo-thumb" style="aspect-ratio: 1;">写真2</div>
+                            <div class="photo-thumb" style="aspect-ratio: 1;">写真3</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin: 20px 0;">
+                        <h4 style="color: #6b5b5b; margin-bottom: 10px;">動画</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="photo-thumb" style="aspect-ratio: 16/9;">
+                                <div>🎥 動画1</div>
+                            </div>
+                            <div class="photo-thumb" style="aspect-ratio: 16/9;">
+                                <div>🎥 動画2</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h4 style="color: #d4a574; margin-bottom: 10px;">メモ</h4>
+                        <p style="font-size: 14px; color: #6b5b5b; line-height: 1.6;">
+                            ・アーチ型の眉毛デザイン<br>
+                            ・次回は3週間後を推奨<br>
+                            ・肌が敏感なため、施術後の保湿を重点的に
+                        </p>
+                    </div>
+                    
+                    <button class="btn-primary">次回予約を確認</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- デザインシステム説明 -->
+        <div class="screen-section" style="background: linear-gradient(135deg, #fff5f0 0%, #fef9f5 100%);">
+            <h3 class="section-title">💡 デザインシステム概要</h3>
+            <p class="section-subtitle">LINA全体で使用している統一デザイン要素</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div>
+                    <h4 style="color: #d4a574; margin-bottom: 10px;">カラーパレット</h4>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <div style="width: 40px; height: 40px; background: #d4a574; border-radius: 8px;"></div>
+                        <div style="width: 40px; height: 40px; background: #f4b4a4; border-radius: 8px;"></div>
+                        <div style="width: 40px; height: 40px; background: #fff5f0; border-radius: 8px;"></div>
+                        <div style="width: 40px; height: 40px; background: #fef9f5; border-radius: 8px;"></div>
+                    </div>
+                    <p style="font-size: 13px; color: #7a6a6a;">
+                        美容サロンらしい温かみのある色調
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 style="color: #d4a574; margin-bottom: 10px;">タイポグラフィ</h4>
+                    <p style="font-size: 13px; color: #7a6a6a;">
+                        フォント: Noto Sans JP<br>
+                        見出し: 24px / 18px<br>
+                        本文: 14px<br>
+                        補足: 12px
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 style="color: #d4a574; margin-bottom: 10px;">コンポーネント</h4>
+                    <p style="font-size: 13px; color: #7a6a6a;">
+                        • 角丸: 8px〜15px<br>
+                        • 余白: 20px基準<br>
+                        • ボタン: グラデーション<br>
+                        • カード: 薄影付き
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 style="color: #d4a574; margin-bottom: 10px;">インタラクション</h4>
+                    <p style="font-size: 13px; color: #7a6a6a;">
+                        • ホバー: 軽い浮遊感<br>
+                        • タップ: 色の変化<br>
+                        • 遷移: 0.3秒<br>
+                        • フィードバック: 即座
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINA × LINE 連携フロー図</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f0f9f4 0%, #fef9f5 100%);
+            color: #5a5a5a;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .main-title {
+            text-align: center;
+            color: #d4a574;
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #9a9a9a;
+            margin-bottom: 40px;
+        }
+        
+        /* フローチャートセクション */
+        .flow-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .flow-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 30px;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+        
+        .flow-step {
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -25px;
+            top: 60px;
+            font-size: 24px;
+            color: #d4a574;
+        }
+        
+        .flow-step:last-child::after {
+            display: none;
+        }
+        
+        .flow-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #fff5f0 0%, #fef9f5 100%);
+            border: 3px solid #d4a574;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+        
+        .flow-title {
+            font-size: 16px;
+            color: #6b5b5b;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .flow-desc {
+            font-size: 13px;
+            color: #9a9a9a;
+        }
+        
+        /* モックアップセクション */
+        .mockup-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .section-header {
+            font-size: 24px;
+            color: #d4a574;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            align-items: start;
+        }
+        
+        /* LINE画面のモック */
+        .line-phone {
+            width: 350px;
+            background: white;
+            border: 2px solid #e8e8e8;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .line-header {
+            background: #00B900;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .line-back {
+            font-size: 20px;
+        }
+        
+        .line-content {
+            padding: 20px;
+            background: #7494C0;
+            min-height: 500px;
+        }
+        
+        /* LINEメッセージバブル */
+        .message-bubble {
+            background: white;
+            border-radius: 15px;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            max-width: 85%;
+            position: relative;
+        }
+        
+        .message-bubble.bot {
+            background: white;
+            margin-right: auto;
+        }
+        
+        .message-bubble.bot::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 10px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 10px 10px 0;
+            border-color: transparent white transparent transparent;
+        }
+        
+        .message-time {
+            font-size: 11px;
+            color: #8E8E93;
+            margin-top: 5px;
+        }
+        
+        /* リッチメニュー */
+        .rich-menu {
+            background: white;
+            border-top: 1px solid #ddd;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: #ddd;
+        }
+        
+        .rich-menu-item {
+            background: white;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .rich-menu-item:hover {
+            background: #f0f0f0;
+        }
+        
+        .rich-menu-item.primary {
+            background: linear-gradient(135deg, #fff5f0 0%, #fef9f5 100%);
+            grid-column: span 2;
+        }
+        
+        .menu-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .menu-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* フレックスカード */
+        .flex-message {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .flex-header {
+            background: linear-gradient(135deg, #f4b4a4 0%, #d4a574 100%);
+            color: white;
+            padding: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .flex-body {
+            padding: 15px;
+        }
+        
+        .flex-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .flex-label {
+            color: #999;
+        }
+        
+        .flex-value {
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .flex-button {
+            background: #00B900;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* タイムライン */
+        .timeline-container {
+            position: relative;
+            padding: 40px 0;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #d4a574;
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-content {
+            width: 45%;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: #d4a574;
+            border: 4px solid white;
+            border-radius: 50%;
+            top: 25px;
+        }
+        
+        .timeline-time {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -20px;
+            background: #d4a574;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        
+        /* 説明カード */
+        .info-card {
+            background: linear-gradient(135deg, #fff5f0 0%, #ffffff 100%);
+            border: 1px solid #f0e0d0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .info-title {
+            color: #d4a574;
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .info-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .info-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0e0d0;
+            font-size: 14px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .info-icon {
+            color: #d4a574;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .flow-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .flow-step::after {
+                display: none;
+            }
+            
+            .timeline-item,
+            .timeline-item:nth-child(odd) {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .timeline-content {
+                width: 90%;
+            }
+            
+            .timeline-line {
+                left: 20px;
+            }
+            
+            .timeline-dot {
+                left: 20px;
+            }
+            
+            .line-phone {
+                margin: 0 auto;
+            }
+        }
+        
+        .arrow-down {
+            text-align: center;
+            font-size: 32px;
+            color: #d4a574;
+            margin: 20px 0;
+        }
+        
+        .highlight-box {
+            background: #fffbf0;
+            border-left: 4px solid #d4a574;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">LINA × LINE 連携フロー</h1>
+        <p class="subtitle">LINEを活用した予約から施術完了までの流れ</p>
+        
+        <!-- 全体フロー図 -->
+        <div class="flow-section">
+            <h2 class="section-header">📊 全体の処理フロー</h2>
+            
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="flow-icon">📱</div>
+                    <div class="flow-title">1. LINE公式アカウント</div>
+                    <div class="flow-desc">お客様が友だち追加<br>リッチメニュー表示</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-icon">🎯</div>
+                    <div class="flow-title">2. 予約ページアクセス</div>
+                    <div class="flow-desc">リッチメニューから<br>Webアプリへ遷移</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-icon">📝</div>
+                    <div class="flow-title">3. 仮予約申込</div>
+                    <div class="flow-desc">メニュー・日時選択<br>仮予約完了</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-icon">💬</div>
+                    <div class="flow-title">4. LINE通知</div>
+                    <div class="flow-desc">仮予約受付通知<br>自動メッセージ送信</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-icon">✅</div>
+                    <div class="flow-title">5. 本予約確定</div>
+                    <div class="flow-desc">オーナー承認<br>確定通知送信</div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-icon">🔔</div>
+                    <div class="flow-title">6. リマインド</div>
+                    <div class="flow-desc">前日に自動通知<br>当日朝に再通知</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- LINE側のモックアップ -->
+        <div class="mockup-section">
+            <h2 class="section-header">💬 LINE側の画面フロー</h2>
+            
+            <div class="mockup-grid">
+                <!-- 1. リッチメニューからアクセス -->
+                <div>
+                    <h3 style="color: #6b5b5b; margin-bottom: 15px;">① リッチメニュー表示</h3>
+                    <div class="line-phone">
+                        <div class="line-header">
+                            <span class="line-back">←</span>
+                            <span>美容サロン LINA</span>
+                        </div>
+                        <div class="line-content">
+                            <div class="message-bubble bot">
+                                <div>こんにちは！美容サロンLINAです✨</div>
+                                <div style="margin-top: 10px;">下のメニューから、ご希望のサービスをお選びください。</div>
+                                <div class="message-time">10:30</div>
+                            </div>
+                        </div>
+                        <div class="rich-menu">
+                            <div class="rich-menu-item primary">
+                                <div class="menu-icon">📅</div>
+                                <div class="menu-label">予約する</div>
+                            </div>
+                            <div class="rich-menu-item">
+                                <div class="menu-icon">📝</div>
+                                <div class="menu-label">予約確認</div>
+                            </div>
+                            <div class="rich-menu-item">
+                                <div class="menu-icon">💄</div>
+                                <div class="menu-label">メニュー</div>
+                            </div>
+                            <div class="rich-menu-item">
+                                <div class="menu-icon">📍</div>
+                                <div class="menu-label">アクセス</div>
+                            </div>
+                            <div class="rich-menu-item">
+                                <div class="menu-icon">☎️</div>
+                                <div class="menu-label">お問合せ</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="highlight-box">
+                        「予約する」をタップ → Webアプリへ遷移
+                    </div>
+                </div>
+                
+                <!-- 2. 仮予約通知 -->
+                <div>
+                    <h3 style="color: #6b5b5b; margin-bottom: 15px;">② 仮予約受付通知</h3>
+                    <div class="line-phone">
+                        <div class="line-header">
+                            <span class="line-back">←</span>
+                            <span>美容サロン LINA</span>
+                        </div>
+                        <div class="line-content">
+                            <div class="flex-message">
+                                <div class="flex-header">
+                                    📝 仮予約を受け付けました
+                                </div>
+                                <div class="flex-body">
+                                    <div class="flex-row">
+                                        <span class="flex-label">お名前</span>
+                                        <span class="flex-value">山田 花子様</span>
+                                    </div>
+                                    <div class="flex-row">
+                                        <span class="flex-label">日時</span>
+                                        <span class="flex-value">11月20日(水) 14:00</span>
+                                    </div>
+                                    <div class="flex-row">
+                                        <span class="flex-label">メニュー</span>
+                                        <span class="flex-value">眉毛ワックス</span>
+                                    </div>
+                                    <div class="flex-row">
+                                        <span class="flex-label">所要時間</span>
+                                        <span class="flex-value">30分</span>
+                                    </div>
+                                    <div class="flex-row">
+                                        <span class="flex-label">料金</span>
+                                        <span class="flex-value">¥3,500</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="message-bubble bot">
+                                <div>仮予約を受け付けました。</div>
+                                <div style="margin-top: 10px;">確定次第、改めてご連絡いたします。</div>
+                                <div class="message-time">14:35</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 3. 本予約確定通知 -->
+                <div>
+                    <h3 style="color: #6b5b5b; margin-bottom: 15px;">③ 本予約確定通知</h3>
+                    <div class="line-phone">
+                        <div class="line-header">
+                            <span class="line-back">←</span>
+                            <span>美容サロン LINA</span>
+                        </div>
+                        <div class="line-content">
+                            <div class="flex-message">
+                                <div class="flex-header" style="background: linear-gradient(135deg, #7fcdbb 0%, #41b699 100%);">
+                                    ✅ 予約が確定しました
+                                </div>
+                                <div class="flex-body">
+                                    <div class="flex-row">
+                                        <span class="flex-label">予約番号</span>
+                                        <span class="flex-value">#2024112001</span>
+                                    </div>
+                                    <div class="flex-row">
+                                        <span class="flex-label">日時</span>
+                                        <span class="flex-value">11月20日(水) 14:00</span>
+                                    </div>
+                                    <div class="flex-row">
+                                        <span class="flex-label">メニュー</span>
+                                        <span class="flex-value">眉毛ワックス</span>
+                                    </div>
+                                    <div class="flex-button">
+                                        予約内容を確認
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="message-bubble bot">
+                                <div>山田様、ご予約が確定しました！</div>
+                                <div style="margin-top: 10px;">当日お会いできることを楽しみにしております💕</div>
+                                <div class="message-time">15:20</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 4. リマインド通知 -->
+                <div>
+                    <h3 style="color: #6b5b5b; margin-bottom: 15px;">④ 前日リマインド通知</h3>
+                    <div class="line-phone">
+                        <div class="line-header">
+                            <span class="line-back">←</span>
+                            <span>美容サロン LINA</span>
+                        </div>
+                        <div class="line-content">
+                            <div class="flex-message">
+                                <div class="flex-header" style="background: linear-gradient(135deg, #ffd89b 0%, #ffb347 100%);">
+                                    🔔 明日のご予約のお知らせ
+                                </div>
+                                <div class="flex-body">
+                                    <div class="flex-row">
+                                        <span class="flex-label">日時</span>
+                                        <span class="flex-value">明日 14:00〜</span>
+                                    </div>
+                                    <div class="flex-row">
+                                        <span class="flex-label">メニュー</span>
+                                        <span class="flex-value">眉毛ワックス</span>
+                                    </div>
+                                    <div class="flex-row">
+                                        <span class="flex-label">場所</span>
+                                        <span class="flex-value">美容サロンLINA</span>
+                                    </div>
+                                    <div style="margin-top: 15px; padding: 10px; background: #fff5f0; border-radius: 8px;">
+                                        <div style="font-size: 13px; color: #666;">
+                                            📍 東京都渋谷区〇〇1-2-3<br>
+                                            　 〇〇ビル 3F
+                                        </div>
+                                    </div>
+                                    <div class="flex-button" style="background: #d4a574;">
+                                        地図を確認
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="message-bubble bot">
+                                <div>山田様、明日のご来店をお待ちしております✨</div>
+                                <div style="margin-top: 10px;">もし変更がございましたら、お早めにご連絡ください。</div>
+                                <div class="message-time">19:00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- タイムライン形式の詳細フロー -->
+        <div class="mockup-section">
+            <h2 class="section-header">⏰ 時系列での通知フロー</h2>
+            
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-time">Day 0 - 14:00</div>
+                    <div class="timeline-content">
+                        <h4 style="color: #d4a574; margin-bottom: 10px;">仮予約申込</h4>
+                        <p style="font-size: 14px;">お客様がWebアプリで仮予約を完了</p>
+                        <div style="margin-top: 10px; padding: 10px; background: #f9f9f9; border-radius: 8px;">
+                            <strong>LINE通知:</strong> 仮予約受付メッセージ
+                        </div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-time">Day 0 - 15:00</div>
+                    <div class="timeline-content">
+                        <h4 style="color: #d4a574; margin-bottom: 10px;">オーナー確認・承認</h4>
+                        <p style="font-size: 14px;">管理画面で仮予約を本予約に変更</p>
+                        <div style="margin-top: 10px; padding: 10px; background: #f9f9f9; border-radius: 8px;">
+                            <strong>LINE通知:</strong> 予約確定メッセージ
+                        </div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-time">Day 6 - 19:00</div>
+                    <div class="timeline-content">
+                        <h4 style="color: #d4a574; margin-bottom: 10px;">前日リマインド</h4>
+                        <p style="font-size: 14px;">自動で前日リマインドを送信</p>
+                        <div style="margin-top: 10px; padding: 10px; background: #f9f9f9; border-radius: 8px;">
+                            <strong>LINE通知:</strong> 明日の予約お知らせ
+                        </div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-time">Day 7 - 09:00</div>
+                    <div class="timeline-content">
+                        <h4 style="color: #d4a574; margin-bottom: 10px;">当日リマインド</h4>
+                        <p style="font-size: 14px;">当日朝に最終リマインド</p>
+                        <div style="margin-top: 10px; padding: 10px; background: #f9f9f9; border-radius: 8px;">
+                            <strong>LINE通知:</strong> 本日のご予約確認
+                        </div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-time">Day 7 - 16:00</div>
+                    <div class="timeline-content">
+                        <h4 style="color: #d4a574; margin-bottom: 10px;">施術完了後</h4>
+                        <p style="font-size: 14px;">お礼メッセージと次回予約の案内</p>
+                        <div style="margin-top: 10px; padding: 10px; background: #f9f9f9; border-radius: 8px;">
+                            <strong>LINE通知:</strong> お礼＆次回予約ご案内
+                        </div>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 連携機能の詳細 -->
+        <div class="mockup-section">
+            <h2 class="section-header">🔧 LINE連携機能の詳細</h2>
+            
+            <div class="mockup-grid">
+                <div class="info-card">
+                    <div class="info-title">📨 自動通知メッセージ</div>
+                    <ul class="info-list">
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>仮予約受付通知（即時）</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>本予約確定通知（承認後即時）</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>前日リマインド（19:00）</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>当日リマインド（9:00）</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>キャンセル通知</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>変更通知</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-title">🎨 リッチメニュー機能</div>
+                    <ul class="info-list">
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>予約ページへの直接リンク</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>予約確認ページ</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>メニュー一覧表示</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>サロンアクセス情報</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>お問い合わせフォーム</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-title">📋 Flexメッセージ活用</div>
+                    <ul class="info-list">
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>予約内容をカード形式で表示</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>ボタン付きメッセージ</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>画像付きメニュー紹介</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>地図情報の埋め込み</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-title">🔐 LINE認証連携</div>
+                    <ul class="info-list">
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>LINEログインでの認証</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>プロフィール情報の自動取得</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>友だち追加状態の確認</span>
+                        </li>
+                        <li>
+                            <span class="info-icon">•</span>
+                            <span>ユーザーIDでの紐付け管理</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- システム構成図 -->
+        <div class="mockup-section">
+            <h2 class="section-header">🏗️ システム構成</h2>
+            
+            <div style="background: #f9f9f9; padding: 30px; border-radius: 15px;">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: center;">
+                    <div>
+                        <div style="width: 100px; height: 100px; background: #00B900; color: white; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 36px;">
+                            L
+                        </div>
+                        <h4 style="color: #6b5b5b;">LINE Platform</h4>
+                        <p style="font-size: 13px; color: #9a9a9a;">
+                            • Messaging API<br>
+                            • LINE Login<br>
+                            • LIFF (LINE Front-end Framework)
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #f4b4a4 0%, #d4a574 100%); color: white; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">
+                            LINA
+                        </div>
+                        <h4 style="color: #6b5b5b;">LINA Application</h4>
+                        <p style="font-size: 13px; color: #9a9a9a;">
+                            • 予約管理システム<br>
+                            • 顧客管理<br>
+                            • 通知制御
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <div style="width: 100px; height: 100px; background: #4285F4; color: white; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 36px;">
+                            ☁️
+                        </div>
+                        <h4 style="color: #6b5b5b;">Cloud Services</h4>
+                        <p style="font-size: 13px; color: #9a9a9a;">
+                            • データベース<br>
+                            • 画像ストレージ<br>
+                            • スケジューラー
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="arrow-down">⬇️</div>
+                
+                <div style="text-align: center; padding: 20px; background: white; border-radius: 15px;">
+                    <h4 style="color: #d4a574; margin-bottom: 10px;">API連携フロー</h4>
+                    <p style="font-size: 14px; color: #6b5b5b; line-height: 1.8;">
+                        1. WebhookでLINEイベントを受信<br>
+                        2. LINAシステムで処理<br>
+                        3. Messaging APIで通知送信<br>
+                        4. リアルタイムで状態同期
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- まとめ -->
+        <div class="flow-section" style="background: linear-gradient(135deg, #fff5f0 0%, #ffffff 100%);">
+            <h2 class="section-header">✨ LINE連携のメリット</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 48px; color: #d4a574; margin-bottom: 10px;">📱</div>
+                    <h4 style="color: #6b5b5b; margin-bottom: 10px;">アプリ不要</h4>
+                    <p style="font-size: 14px; color: #9a9a9a;">
+                        専用アプリのインストール不要<br>
+                        LINEから直接アクセス可能
+                    </p>
+                </div>
+                
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 48px; color: #d4a574; margin-bottom: 10px;">🔔</div>
+                    <h4 style="color: #6b5b5b; margin-bottom: 10px;">確実な通知</h4>
+                    <p style="font-size: 14px; color: #9a9a9a;">
+                        LINEの高い到達率<br>
+                        見逃しにくい通知
+                    </p>
+                </div>
+                
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 48px; color: #d4a574; margin-bottom: 10px;">👤</div>
+                    <h4 style="color: #6b5b5b; margin-bottom: 10px;">簡単ログイン</h4>
+                    <p style="font-size: 14px; color: #9a9a9a;">
+                        LINEログインで自動認証<br>
+                        面倒な会員登録不要
+                    </p>
+                </div>
+                
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 48px; color: #d4a574; margin-bottom: 10px;">💬</div>
+                    <h4 style="color: #6b5b5b; margin-bottom: 10px;">双方向対話</h4>
+                    <p style="font-size: 14px; color: #9a9a9a;">
+                        チャット感覚でやり取り<br>
+                        親しみやすいUI
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
