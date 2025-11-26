@@ -320,6 +320,32 @@
             background: #e8f5e9;
             border-color: #4caf50;
         }
+        
+        .calendar-cell {
+            padding: 8px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .slot-select {
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            background: white;
+        }
+        
+        .slot-select option[value="available"] {
+            background: #e8f5e9;
+        }
+        
+        .slot-select option[value="few"] {
+            background: #fff3cd;
+        }
+        
+        .slot-select option[value="full"] {
+            background: #ffebee;
+        }
     </style>
 </head>
 <body>
@@ -473,6 +499,7 @@
                 <div class="tab-menu">
                     <button class="tab-item active" onclick="showOwnerTab('dashboard')">ダッシュボード</button>
                     <button class="tab-item" onclick="showOwnerTab('reservations')">予約管理</button>
+                    <button class="tab-item" onclick="showOwnerTab('calendar')">空き枠設定</button>
                     <button class="tab-item" onclick="showOwnerTab('records')">施術記録</button>
                     <button class="tab-item" onclick="showOwnerTab('settings')">設定</button>
                 </div>
@@ -527,6 +554,135 @@
                     
                     <div class="alert alert-success" id="confirm-alert" style="display: none;">
                         <p style="font-size: 13px;">予約を確定しました。LINEで通知を送信しました。</p>
+                    </div>
+                </div>
+                
+                <!-- 空き枠設定 -->
+                <div id="calendar-tab" class="owner-tab" style="display: none;">
+                    <h3 style="margin-bottom: 15px; color: #333;">空き枠カレンダー設定</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label">対象月を選択</label>
+                        <select class="form-select" onchange="changeMonth()">
+                            <option value="2024-11">2024年11月</option>
+                            <option value="2024-12" selected>2024年12月</option>
+                            <option value="2025-01">2025年1月</option>
+                        </select>
+                    </div>
+                    
+                    <div style="background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                        <h4 style="margin-bottom: 10px; color: #666; font-size: 14px;">12月の空き枠設定</h4>
+                        <div style="display: flex; gap: 20px; font-size: 12px; color: #666;">
+                            <span>◎ 空きあり: <strong>12日</strong></span>
+                            <span>△ 残りわずか: <strong>8日</strong></span>
+                            <span>× 満枠: <strong>11日</strong></span>
+                        </div>
+                    </div>
+                    
+                    <!-- カレンダー表示 -->
+                    <div style="background: white; border: 1px solid #ddd; border-radius: 10px; padding: 15px;">
+                        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 10px;">
+                            <div style="text-align: center; font-size: 11px; color: #999; padding: 5px;">日</div>
+                            <div style="text-align: center; font-size: 11px; color: #999; padding: 5px;">月</div>
+                            <div style="text-align: center; font-size: 11px; color: #999; padding: 5px;">火</div>
+                            <div style="text-align: center; font-size: 11px; color: #999; padding: 5px;">水</div>
+                            <div style="text-align: center; font-size: 11px; color: #999; padding: 5px;">木</div>
+                            <div style="text-align: center; font-size: 11px; color: #999; padding: 5px;">金</div>
+                            <div style="text-align: center; font-size: 11px; color: #999; padding: 5px;">土</div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px;" id="calendar-grid">
+                            <!-- 1週目 -->
+                            <div class="calendar-cell" data-date="1">
+                                <div style="font-weight: bold; margin-bottom: 5px;">1</div>
+                                <select class="slot-select" style="width: 100%; font-size: 10px; padding: 2px;">
+                                    <option value="full">満枠</option>
+                                    <option value="few">残少</option>
+                                    <option value="available">空き</option>
+                                </select>
+                            </div>
+                            <div class="calendar-cell" data-date="2">
+                                <div style="font-weight: bold; margin-bottom: 5px;">2</div>
+                                <select class="slot-select" style="width: 100%; font-size: 10px; padding: 2px;">
+                                    <option value="full">満枠</option>
+                                    <option value="few">残少</option>
+                                    <option value="available" selected>空き</option>
+                                </select>
+                            </div>
+                            <div class="calendar-cell" data-date="3">
+                                <div style="font-weight: bold; margin-bottom: 5px;">3</div>
+                                <select class="slot-select" style="width: 100%; font-size: 10px; padding: 2px;">
+                                    <option value="full">満枠</option>
+                                    <option value="few">残少</option>
+                                    <option value="available" selected>空き</option>
+                                </select>
+                            </div>
+                            <div class="calendar-cell" data-date="4">
+                                <div style="font-weight: bold; margin-bottom: 5px;">4</div>
+                                <select class="slot-select" style="width: 100%; font-size: 10px; padding: 2px;">
+                                    <option value="full">満枠</option>
+                                    <option value="few" selected>残少</option>
+                                    <option value="available">空き</option>
+                                </select>
+                            </div>
+                            <div class="calendar-cell" data-date="5">
+                                <div style="font-weight: bold; margin-bottom: 5px;">5</div>
+                                <select class="slot-select" style="width: 100%; font-size: 10px; padding: 2px;">
+                                    <option value="full" selected>満枠</option>
+                                    <option value="few">残少</option>
+                                    <option value="available">空き</option>
+                                </select>
+                            </div>
+                            <div class="calendar-cell" data-date="6">
+                                <div style="font-weight: bold; margin-bottom: 5px;">6</div>
+                                <select class="slot-select" style="width: 100%; font-size: 10px; padding: 2px;">
+                                    <option value="full">満枠</option>
+                                    <option value="few">残少</option>
+                                    <option value="available" selected>空き</option>
+                                </select>
+                            </div>
+                            <div class="calendar-cell" data-date="7">
+                                <div style="font-weight: bold; margin-bottom: 5px;">7</div>
+                                <select class="slot-select" style="width: 100%; font-size: 10px; padding: 2px;">
+                                    <option value="full">満枠</option>
+                                    <option value="few" selected>残少</option>
+                                    <option value="available">空き</option>
+                                </select>
+                            </div>
+                            <!-- 2週目以降は省略（実際には31日分必要） -->
+                        </div>
+                    </div>
+                    
+                    <!-- 時間帯別設定 -->
+                    <div style="margin-top: 20px; background: #f9f9f9; padding: 15px; border-radius: 10px;">
+                        <h4 style="margin-bottom: 10px; color: #666; font-size: 14px;">デフォルト営業時間</h4>
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; margin-bottom: 10px;">
+                                <input type="checkbox" checked style="margin-right: 10px;">
+                                <span style="font-size: 14px;">10:00 - 12:00</span>
+                            </label>
+                            <label style="display: flex; align-items: center; margin-bottom: 10px;">
+                                <input type="checkbox" checked style="margin-right: 10px;">
+                                <span style="font-size: 14px;">14:00 - 17:00</span>
+                            </label>
+                            <label style="display: flex; align-items: center;">
+                                <input type="checkbox" style="margin-right: 10px;">
+                                <span style="font-size: 14px;">18:00 - 20:00</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;">
+                        <button class="btn btn-secondary">プレビュー</button>
+                        <button class="btn btn-primary" onclick="generateCalendar()">カレンダー生成</button>
+                    </div>
+                    
+                    <!-- 生成完了メッセージ -->
+                    <div class="alert alert-success" id="calendar-generated" style="display: none; margin-top: 20px;">
+                        <p style="font-size: 13px;">✅ 空き枠カレンダーを生成しました</p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                            <button class="btn btn-secondary" style="font-size: 13px; padding: 8px;">LINEで配信</button>
+                            <button class="btn btn-secondary" style="font-size: 13px; padding: 8px;">画像ダウンロード</button>
+                        </div>
                     </div>
                 </div>
                 
@@ -707,6 +863,18 @@
         function confirmReservation() {
             document.getElementById('confirm-alert').style.display = 'block';
             event.target.style.display = 'none';
+        }
+        
+        // カレンダー生成
+        function generateCalendar() {
+            document.getElementById('calendar-generated').style.display = 'block';
+            // 実際にはここで画像生成処理を行う
+        }
+        
+        // 月変更
+        function changeMonth() {
+            // 月に応じてカレンダーの内容を更新
+            document.getElementById('calendar-generated').style.display = 'none';
         }
     </script>
 </body>
