@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINA - カレンダー連携機能 モックアップ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #fef9f5 100%);
+            color: #5a5a5a;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .main-title {
+            text-align: center;
+            color: #d4a574;
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #9a9a9a;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+        
+        /* セクションスタイル */
+        .feature-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .section-header {
+            font-size: 24px;
+            color: #d4a574;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #fff5f0;
+            padding-bottom: 15px;
+        }
+        
+        /* モックアップグリッド */
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            align-items: start;
+        }
+        
+        /* スマホフレーム */
+        .phone-frame {
+            width: 350px;
+            background: white;
+            border: 2px solid #e8e8e8;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin: 0 auto;
+        }
+        
+        .phone-header {
+            height: 30px;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #999;
+            padding: 0 20px;
+        }
+        
+        .phone-content {
+            padding: 20px;
+            min-height: 600px;
+        }
+        
+        /* カレンダースタイル */
+        .calendar-preview {
+            background: linear-gradient(135deg, #fff5f0 0%, #ffffff 100%);
+            border: 1px solid #f0e0d0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-header {
+            text-align: center;
+            font-size: 18px;
+            color: #d4a574;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .cal-day {
+            text-align: center;
+            font-size: 10px;
+            color: #999;
+            padding: 5px 0;
+            font-weight: bold;
+        }
+        
+        .cal-date {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 12px;
+            background: white;
+            border: 1px solid #f0f0f0;
+            position: relative;
+        }
+        
+        .cal-date.available {
+            background: #e8f5e9;
+            border-color: #81c784;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+        
+        .cal-date.few {
+            background: #fff3e0;
+            border-color: #ffb74d;
+            color: #ef6c00;
+        }
+        
+        .cal-date.full {
+            background: #ffebee;
+            border-color: #ef9a9a;
+            color: #c62828;
+        }
+        
+        .slot-indicator {
+            font-size: 8px;
+            margin-top: 2px;
+        }
+        
+        /* ボタンスタイル */
+        .btn-primary {
+            background: linear-gradient(135deg, #f4b4a4 0%, #d4a574 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 15px 30px;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(212, 165, 116, 0.3);
+            margin: 15px 0;
+        }
+        
+        .btn-google {
+            background: white;
+            color: #4285f4;
+            border: 2px solid #4285f4;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .google-icon {
+            width: 20px;
+            height: 20px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="%234285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="%2334A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="%23FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24c0 3.55.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="%23EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg>') center/contain no-repeat;
+        }
+        
+        /* フロー図 */
+        .flow-diagram {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .flow-number {
+            width: 40px;
+            height: 40px;
+            background: #d4a574;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .flow-content {
+            margin-left: 20px;
+            flex: 1;
+        }
+        
+        .flow-title {
+            font-weight: bold;
+            color: #6b5b5b;
+            margin-bottom: 5px;
+        }
+        
+        .flow-desc {
+            font-size: 14px;
+            color: #9a9a9a;
+        }
+        
+        /* 機能カード */
+        .feature-card {
+            background: linear-gradient(135deg, #fff5f0 0%, #ffffff 100%);
+            border: 1px solid #f0e0d0;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            color: #d4a574;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0e0d0;
+            font-size: 14px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .check-icon {
+            color: #4caf50;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        /* Canvaプレビュー */
+        .canva-preview {
+            background: white;
+            border: 2px solid #e8e8e8;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .canva-toolbar {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            font-size: 12px;
+        }
+        
+        .canva-tool {
+            background: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* 通知プレビュー */
+        .notification-preview {
+            background: white;
+            border-left: 4px solid #d4a574;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .notif-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .notif-icon {
+            width: 40px;
+            height: 40px;
+            background: #00B900;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .notif-title {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .notif-time {
+            font-size: 12px;
+            color: #999;
+            margin-left: auto;
+        }
+        
+        .notif-body {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .mockup-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .phone-frame {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
+        
+        .highlight {
+            background: #fffbf0;
+            border-left: 4px solid #d4a574;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .badge-new {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .badge-auto {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">LINA カレンダー連携機能</h1>
+        <p class="subtitle">空き枠カレンダー自動生成 × Googleカレンダー完全連携</p>
+        
+        <!-- 機能概要 -->
+        <div class="feature-section">
+            <h2 class="section-header">🎯 解決する課題と新機能</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="feature-card">
+                    <div class="feature-title">
+                        😰 現在の課題
+                    </div>
+                    <ul class="feature-list">
+                        <li>
+                            <span style="color: #dc3545;">✗</span>
+                            <span>Canvaでカレンダー作成中に予約が入り作り直し</span>
+                        </li>
+                        <li>
+                            <span style="color: #dc3545;">✗</span>
+                            <span>手作業でのカレンダー更新に時間がかかる</span>
+                        </li>
+                        <li>
+                            <span style="color: #dc3545;">✗</span>
+                            <span>予約状況をスマホですぐ確認できない</span>
+                        </li>
+                        <li>
+                            <span style="color: #dc3545;">✗</span>
+                            <span>お客様が予約を忘れてしまう</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card" style="background: linear-gradient(135deg, #e8f5e9 0%, #ffffff 100%); border-color: #81c784;">
+                    <div class="feature-title">
+                        ✨ 新機能で解決
+                    </div>
+                    <ul class="feature-list">
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>リアルタイム反映の空き枠カレンダー自動生成</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>ワンクリックでLINE・SNS配信</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>Googleカレンダーでいつでも確認</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>お客様のスマホカレンダーに自動追加</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 機能1: 空き枠カレンダー自動生成 -->
+        <div class="feature-section">
+            <h2 class="section-header">📅 機能1: 空き枠カレンダー自動生成</h2>
+            
+            <div class="mockup-grid">
+                <!-- 管理画面 -->
+                <div>
+                    <h3 style="color: #6b5b5b; margin-bottom: 15px;">オーナー管理画面</h3>
+                    <div class="phone-frame">
+                        <div class="phone-header">9:41 AM ━━━━━━━━━━ 🔋</div>
+                        <div class="phone-content">
+                            <h2 style="color: #d4a574; text-align: center; margin-bottom: 20px;">空き枠カレンダー作成</h2>
+                            
+                            <div class="feature-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                    <span style="font-weight: bold; color: #6b5b5b;">12月の空き状況</span>
+                                    <span class="badge-auto">自動更新中</span>
+                                </div>
+                                <div style="font-size: 13px; color: #999;">最終更新: 2分前</div>
+                            </div>
+                            
+                            <div class="calendar-preview">
+                                <div class="calendar-header">2024年12月</div>
+                                <div class="calendar-grid">
+                                    <div class="cal-day">月</div>
+                                    <div class="cal-day">火</div>
+                                    <div class="cal-day">水</div>
+                                    <div class="cal-day">木</div>
+                                    <div class="cal-day">金</div>
+                                    <div class="cal-day">土</div>
+                                    <div class="cal-day">日</div>
+                                    
+                                    <div class="cal-date"></div>
+                                    <div class="cal-date"></div>
+                                    <div class="cal-date"></div>
+                                    <div class="cal-date"></div>
+                                    <div class="cal-date"></div>
+                                    <div class="cal-date"></div>
+                                    <div class="cal-date full">1<div class="slot-indicator">×</div></div>
+                                    
+                                    <div class="cal-date available">2<div class="slot-indicator">◎</div></div>
+                                    <div class="cal-date available">3<div class="slot-indicator">◎</div></div>
+                                    <div class="cal-date few">4<div class="slot-indicator">△</div></div>
+                                    <div class="cal-date full">5<div class="slot-indicator">×</div></div>
+                                    <div class="cal-date available">6<div class="slot-indicator">◎</div></div>
+                                    <div class="cal-date few">7<div class="slot-indicator">△</div></div>
+                                    <div class="cal-date full">8<div class="slot-indicator">×</div></div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: #f9f9f9; border-radius: 10px; padding: 15px; margin: 15px 0;">
+                                <div style="font-size: 14px; color: #6b5b5b; margin-bottom: 10px;">
+                                    <strong>凡例</strong>
+                                </div>
+                                <div style="display: flex; justify-content: space-around; font-size: 13px;">
+                                    <span><span style="color: #2e7d32;">◎</span> 空きあり</span>
+                                    <span><span style="color: #ef6c00;">△</span> 残りわずか</span>
+                                    <span><span style="color: #c62828;">×</span> 満枠</span>
+                                </div>
+                            </div>
+                            
+                            <button class="btn-primary">
+                                🎨 デザインテンプレート選択
+                            </button>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <button class="btn-google" style="background: #00B900; color: white; border-color: #00B900;">
+                                    <span>L</span>
+                                    <span>LINEで配信</span>
+                                </button>
+                                <button class="btn-google" style="background: #1DA1F2; color: white; border-color: #1DA1F2;">
+                                    <span>X</span>
+                                    <span>Xに投稿</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 生成されたカレンダー -->
+                <div>
+                    <h3 style="color: #6b5b5b; margin-bottom: 15px;">自動生成されたカレンダー画像</h3>
+                    <div class="canva-preview">
+                        <div class="canva-toolbar">
+                            <div class="canva-tool">テンプレート1</div>
+                            <div class="canva-tool" style="background: #d4a574; color: white;">テンプレート2</div>
+                            <div class="canva-tool">テンプレート3</div>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #fce4ec 0%, #fff3e0 100%); border-radius: 15px; padding: 30px; text-align: center;">
+                            <h3 style="color: #d4a574; font-size: 24px; margin-bottom: 10px;">✨ 12月の空き状況 ✨</h3>
+                            <p style="color: #9a9a9a; font-size: 14px; margin-bottom: 20px;">美容サロン LINA</p>
+                            
+                            <div style="background: white; border-radius: 10px; padding: 20px; margin-bottom: 20px;">
+                                <div class="calendar-grid" style="gap: 8px;">
+                                    <div class="cal-day">月</div>
+                                    <div class="cal-day">火</div>
+                                    <div class="cal-day">水</div>
+                                    <div class="cal-day">木</div>
+                                    <div class="cal-day">金</div>
+                                    <div class="cal-day">土</div>
+                                    <div class="cal-day">日</div>
+                                    
+                                    <!-- カレンダー日付 -->
+                                    <div class="cal-date"></div>
+                                    <div class="cal-date"></div>
+                                    <div class="cal-date"></div>
+                                    <div class="cal-date"></div>
+                                    <div class="cal-date"></div>
+                                    <div class="cal-date"></div>
+                                    <div class="cal-date full">1</div>
+                                    
+                                    <div class="cal-date available">2</div>
+                                    <div class="cal-date available">3</div>
+                                    <div class="cal-date few">4</div>
+                                    <div class="cal-date full">5</div>
+                                    <div class="cal-date available">6</div>
+                                    <div class="cal-date few">7</div>
+                                    <div class="cal-date full">8</div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: rgba(255,255,255,0.8); border-radius: 10px; padding: 15px;">
+                                <p style="font-size: 14px; color: #6b5b5b; margin-bottom: 10px;">
+                                    📱 ご予約はLINEから
+                                </p>
+                                <div style="background: #00B900; color: white; padding: 10px 20px; border-radius: 25px; display: inline-block; font-size: 14px;">
+                                    @lina_salon
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight" style="margin-top: 20px;">
+                            <strong>🎨 自動生成のポイント</strong><br>
+                            • リアルタイムで予約状況を反映<br>
+                            • 複数のデザインテンプレート<br>
+                            • サロンのブランドカラーに対応
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- フロー図 -->
+            <div class="flow-diagram" style="margin-top: 30px;">
+                <h4 style="color: #d4a574; margin-bottom: 20px;">自動生成フロー</h4>
+                
+                <div class="flow-step">
+                    <div class="flow-number">1</div>
+                    <div class="flow-content">
+                        <div class="flow-title">予約データ取得</div>
+                        <div class="flow-desc">現在の予約状況をリアルタイムで取得</div>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-number">2</div>
+                    <div class="flow-content">
+                        <div class="flow-title">空き枠計算</div>
+                        <div class="flow-desc">各日の空き状況を自動で判定（◎/△/×）</div>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-number">3</div>
+                    <div class="flow-content">
+                        <div class="flow-title">画像生成</div>
+                        <div class="flow-desc">選択したテンプレートでカレンダー画像を自動作成</div>
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-number">4</div>
+                    <div class="flow-content">
+                        <div class="flow-title">配信</div>
+                        <div class="flow-desc">LINE、SNSへワンクリックで配信</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 機能2: Googleカレンダー連携（オーナー側） -->
+        <div class="feature-section">
+            <h2 class="section-header">📱 機能2: Googleカレンダー連携（オーナー側）</h2>
+            
+            <div class="mockup-grid">
+                <!-- 設定画面 -->
+                <div>
+                    <h3 style="color: #6b5b5b; margin-bottom: 15px;">初期設定画面</h3>
+                    <div class="phone-frame">
+                        <div class="phone-header">9:41 AM ━━━━━━━━━━ 🔋</div>
+                        <div class="phone-content">
+                            <h2 style="color: #d4a574; text-align: center; margin-bottom: 20px;">Googleカレンダー連携</h2>
+                            
+                            <div class="feature-card">
+                                <div style="text-align: center; margin-bottom: 20px;">
+                                    <div style="font-size: 48px; margin-bottom: 10px;">📱</div>
+                                    <p style="font-size: 14px; color: #6b5b5b;">
+                                        Googleカレンダーと連携すると<br>
+                                        iPhoneやAndroidのカレンダーアプリで<br>
+                                        予約を確認できます
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div style="background: #f9f9f9; border-radius: 10px; padding: 15px; margin: 20px 0;">
+                                <div style="font-weight: bold; color: #6b5b5b; margin-bottom: 10px;">連携するメールアドレス</div>
+                                <input type="email" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; background: white;" placeholder="example@gmail.com" value="salon.lina@gmail.com">
+                            </div>
+                            
+                            <button class="btn-google">
+                                <span class="google-icon"></span>
+                                <span>Googleアカウントでログイン</span>
+                            </button>
+                            
+                            <div class="highlight">
+                                <strong>🔒 セキュリティ</strong><br>
+                                予約情報の書き込みのみを許可します。<br>
+                                既存のカレンダー内容は読み取りません。
+                            </div>
+                            
+                            <div style="margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 10px;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <span style="color: #4caf50; font-size: 20px;">✓</span>
+                                    <strong style="color: #2e7d32;">連携完了</strong>
+                                </div>
+                                <p style="font-size: 13px; color: #666;">
+                                    カレンダー名: LINA予約管理<br>
+                                    同期間隔: リアルタイム
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- iPhone/Androidカレンダー表示 -->
+                <div>
+                    <h3 style="color: #6b5b5b; margin-bottom: 15px;">スマホのカレンダーアプリ</h3>
+                    <div class="phone-frame">
+                        <div class="phone-header">9:41 AM ━━━━━━━━━━ 🔋</div>
+                        <div class="phone-content" style="padding: 0;">
+                            <!-- iOSカレンダー風UI -->
+                            <div style="background: #f7f7f7; padding: 15px; border-bottom: 1px solid #ddd;">
+                                <h3 style="text-align: center; color: #333; font-size: 18px;">11月 2024</h3>
+                            </div>
+                            
+                            <div style="padding: 20px;">
+                                <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; font-size: 11px; color: #999; margin-bottom: 10px;">
+                                    <div>日</div>
+                                    <div>月</div>
+                                    <div>火</div>
+                                    <div>水</div>
+                                    <div>木</div>
+                                    <div>金</div>
+                                    <div>土</div>
+                                </div>
+                                
+                                <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px;">
+                                    <div style="padding: 8px; text-align: center; font-size: 14px; color: #999;">27</div>
+                                    <div style="padding: 8px; text-align: center; font-size: 14px; color: #999;">28</div>
+                                    <div style="padding: 8px; text-align: center; font-size: 14px; color: #999;">29</div>
+                                    <div style="padding: 8px; text-align: center; font-size: 14px; color: #999;">30</div>
+                                    <div style="padding: 8px; text-align: center; font-size: 14px;">31</div>
+                                    <div style="padding: 8px; text-align: center; font-size: 14px;">1</div>
+                                    <div style="padding: 8px; text-align: center; font-size: 14px;">2</div>
+                                    
+                                    <div style="padding: 8px; text-align: center; font-size: 14px;">3</div>
+                                    <div style="padding: 8px; text-align: center; font-size: 14px;">4</div>
+                                    <div style="padding: 8px; text-align: center; font-size: 14px;">
+                                        5
+                                        <div style="width: 6px; height: 6px; background: #d4a574; border-radius: 50%; margin: 2px auto;"></div>
+                                    </div>
+                                    <div style="padding: 8px; text-align: center; font-size: 14px;">6</div>
+                                    <div style="padding: 8px; text-align: center; font-size: 14px; background: #007AFF; color: white; border-radius: 50%;">7</div>
+                                    <div style="padding: 8px; text-align: center; font-size: 14px;">
+                                        8
+                                        <div style="width: 6px; height: 6px; background: #d4a574; border-radius: 50%; margin: 2px auto;"></div>
+                                    </div>
+                                    <div style="padding: 8px; text-align: center; font-size: 14px;">9</div>
+                                </div>
+                                
+                                <div style="margin-top: 30px; border-top: 1px solid #ddd; padding-top: 15px;">
+                                    <h4 style="color: #333; margin-bottom: 15px;">今日の予定</h4>
+                                    
+                                    <div style="background: #fff; border-left: 3px solid #d4a574; padding: 12px; margin-bottom: 10px; border-radius: 5px;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                            <strong style="color: #333; font-size: 14px;">山田様 - 眉毛ワックス</strong>
+                                            <span style="color: #666; font-size: 12px;">10:00</span>
+                                        </div>
+                                        <div style="font-size: 12px; color: #999;">LINA予約</div>
+                                    </div>
+                                    
+                                    <div style="background: #fff; border-left: 3px solid #d4a574; padding: 12px; margin-bottom: 10px; border-radius: 5px;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                            <strong style="color: #333; font-size: 14px;">佐藤様 - まつげパーマ</strong>
+                                            <span style="color: #666; font-size: 12px;">14:00</span>
+                                        </div>
+                                        <div style="font-size: 12px; color: #999;">LINA予約</div>
+                                    </div>
+                                    
+                                    <div style="background: #fff; border-left: 3px solid #d4a574; padding: 12px; border-radius: 5px;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                            <strong style="color: #333; font-size: 14px;">鈴木様 - ネイル</strong>
+                                            <span style="color: #666; font-size: 12px;">16:30</span>
+                                        </div>
+                                        <div style="font-size: 12px; color: #999;">LINA予約</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 機能3: お客様向けGoogleカレンダー連携 -->
+        <div class="feature-section">
+            <h2 class="section-header">👤 機能3: お客様向けカレンダー連携</h2>
+            
+            <div class="mockup-grid">
+                <!-- LINE通知 -->
+                <div>
+                    <h3 style="color: #6b5b5b; margin-bottom: 15px;">本予約確定LINE通知</h3>
+                    <div class="phone-frame">
+                        <div class="phone-header">9:41 AM ━━━━━━━━━━ 🔋</div>
+                        <div class="phone-content" style="background: #7494C0;">
+                            <div style="background: white; border-radius: 15px; padding: 15px; margin-bottom: 15px;">
+                                <div style="background: linear-gradient(135deg, #7fcdbb 0%, #41b699 100%); color: white; margin: -15px -15px 15px -15px; padding: 15px; border-radius: 15px 15px 0 0; font-weight: bold;">
+                                    ✅ 予約が確定しました
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
+                                    <span style="color: #999;">日時</span>
+                                    <span style="color: #333; font-weight: 500;">11月20日(水) 14:00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
+                                    <span style="color: #999;">メニュー</span>
+                                    <span style="color: #333; font-weight: 500;">眉毛ワックス</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 14px;">
+                                    <span style="color: #999;">料金</span>
+                                    <span style="color: #333; font-weight: 500;">¥3,500</span>
+                                </div>
+                                
+                                <a href="#" style="display: block; background: #4285f4; color: white; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: bold;">
+                                    📅 カレンダーに追加する
+                                </a>
+                            </div>
+                            
+                            <div style="background: white; border-radius: 15px; padding: 12px; font-size: 14px; position: relative;">
+                                <div style="position: absolute; left: -8px; top: 10px; width: 0; height: 0; border-style: solid; border-width: 0 10px 10px 0; border-color: transparent white transparent transparent;"></div>
+                                山田様、ご予約が確定しました！<br>
+                                <br>
+                                上のボタンからスマホのカレンダーに追加できます📱<br>
+                                当日お会いできることを楽しみにしております✨
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- カレンダー追加ページ -->
+                <div>
+                    <h3 style="color: #6b5b5b; margin-bottom: 15px;">カレンダー追加ページ</h3>
+                    <div class="phone-frame">
+                        <div class="phone-header">9:41 AM ━━━━━━━━━━ 🔋</div>
+                        <div class="phone-content">
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <div style="font-size: 48px; margin-bottom: 10px;">📅</div>
+                                <h2 style="color: #d4a574;">予約をカレンダーに追加</h2>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <h4 style="color: #6b5b5b; margin-bottom: 15px;">予約内容</h4>
+                                <div style="background: #f9f9f9; padding: 15px; border-radius: 10px;">
+                                    <div style="margin-bottom: 10px;">
+                                        <div style="font-size: 12px; color: #999;">日時</div>
+                                        <div style="font-size: 16px; color: #333; font-weight: bold;">2024年11月20日(水) 14:00-14:30</div>
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <div style="font-size: 12px; color: #999;">内容</div>
+                                        <div style="font-size: 16px; color: #333;">眉毛ワックス @ 美容サロンLINA</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 12px; color: #999;">場所</div>
+                                        <div style="font-size: 14px; color: #333;">東京都渋谷区〇〇1-2-3 〇〇ビル3F</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin: 20px 0;">
+                                <h4 style="color: #6b5b5b; margin-bottom: 15px; text-align: center;">カレンダーを選択</h4>
+                                
+                                <button class="btn-google">
+                                    <span class="google-icon"></span>
+                                    <span>Googleカレンダーに追加</span>
+                                </button>
+                                
+                                <button class="btn-google" style="background: #000; color: white; border-color: #000;">
+                                    <span>🍎</span>
+                                    <span>iPhoneカレンダーに追加</span>
+                                </button>
+                                
+                                <button class="btn-google" style="background: #007AFF; color: white; border-color: #007AFF;">
+                                    <span>📧</span>
+                                    <span>Outlookカレンダーに追加</span>
+                                </button>
+                                
+                                <button class="btn-google" style="background: #f4f4f4; color: #333; border-color: #ddd;">
+                                    <span>📥</span>
+                                    <span>icsファイルをダウンロード</span>
+                                </button>
+                            </div>
+                            
+                            <div class="highlight">
+                                <strong>💡 ヒント</strong><br>
+                                カレンダーに追加すると、前日にリマインド通知が届きます
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 追加後の画面 -->
+                <div>
+                    <h3 style="color: #6b5b5b; margin-bottom: 15px;">お客様のスマホカレンダー</h3>
+                    <div class="phone-frame">
+                        <div class="phone-header">9:41 AM ━━━━━━━━━━ 🔋</div>
+                        <div class="phone-content" style="padding: 0;">
+                            <!-- Googleカレンダー風UI -->
+                            <div style="background: #4285f4; color: white; padding: 15px;">
+                                <h3 style="font-size: 18px;">11月 2024</h3>
+                            </div>
+                            
+                            <div style="padding: 20px; background: #f8f9fa;">
+                                <!-- カレンダー省略 -->
+                                <div style="background: white; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                                    <div style="display: flex; align-items: center; gap: 15px;">
+                                        <div style="text-align: center;">
+                                            <div style="font-size: 24px; color: #4285f4; font-weight: bold;">20</div>
+                                            <div style="font-size: 12px; color: #999;">水曜日</div>
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+                                                <div style="width: 4px; height: 40px; background: #d4a574; border-radius: 2px;"></div>
+                                                <div>
+                                                    <div style="font-size: 14px; color: #333; font-weight: bold;">美容サロンLINA - 眉毛ワックス</div>
+                                                    <div style="font-size: 13px; color: #666;">14:00 - 14:30</div>
+                                                    <div style="font-size: 12px; color: #999;">📍 東京都渋谷区〇〇1-2-3</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 通知設定 -->
+                                <div style="background: #e8f5e9; border-radius: 8px; padding: 15px;">
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                        <span style="color: #4caf50; font-size: 20px;">🔔</span>
+                                        <strong style="color: #2e7d32;">リマインド設定済み</strong>
+                                    </div>
+                                    <div style="font-size: 13px; color: #666;">
+                                        • 前日 19:00 に通知<br>
+                                        • 当日 9:00 に通知
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 競合優位性 -->
+        <div class="feature-section" style="background: linear-gradient(135deg, #e8f5e9 0%, #fff5f0 100%);">
+            <h2 class="section-header">🏆 競合サービスとの差別化ポイント</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 48px; color: #d4a574; margin-bottom: 10px;">🎨</div>
+                    <h4 style="color: #6b5b5b; margin-bottom: 10px;">空き枠カレンダー自動生成</h4>
+                    <p style="font-size: 14px; color: #666;">
+                        手作業でのカレンダー作成不要<br>
+                        常に最新の空き状況を反映
+                    </p>
+                </div>
+                
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 48px; color: #d4a574; margin-bottom: 10px;">📱</div>
+                    <h4 style="color: #6b5b5b; margin-bottom: 10px;">完全なカレンダー連携</h4>
+                    <p style="font-size: 14px; color: #666;">
+                        オーナー・お客様双方のカレンダー対応<br>
+                        iPhone/Android標準アプリで確認
+                    </p>
+                </div>
+                
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 48px; color: #d4a574; margin-bottom: 10px;">🔄</div>
+                    <h4 style="color: #6b5b5b; margin-bottom: 10px;">リアルタイム同期</h4>
+                    <p style="font-size: 14px; color: #666;">
+                        予約変更が即座に反映<br>
+                        ダブルブッキングを完全防止
+                    </p>
+                </div>
+                
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 48px; color: #d4a574; margin-bottom: 10px;">💬</div>
+                    <h4 style="color: #6b5b5b; margin-bottom: 10px;">LINE完全統合</h4>
+                    <p style="font-size: 14px; color: #666;">
+                        空き枠通知から予約まで一貫<br>
+                        お客様の行動導線を最適化
+                    </p>
+                </div>
+            </div>
+            
+            <div class="highlight" style="margin-top: 30px; background: white;">
+                <h4 style="color: #d4a574; margin-bottom: 10px;">💎 これらの機能により...</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 5px 0;">✅ カレンダー作成時間を<strong>月10時間 → 0時間</strong>に削減</li>
+                    <li style="padding: 5px 0;">✅ 予約の取りこぼしを<strong>70%削減</strong></li>
+                    <li style="padding: 5px 0;">✅ ドタキャン率を<strong>50%削減</strong></li>
+                    <li style="padding: 5px 0;">✅ リピート予約率<strong>30%向上</strong></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 実装スケジュール -->
+        <div class="feature-section">
+            <h2 class="section-header">📋 実装優先度</h2>
+            
+            <div style="background: #f9f9f9; border-radius: 15px; padding: 30px;">
+                <div style="margin-bottom: 25px;">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                        <span style="background: #dc3545; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px;">優先度: 高</span>
+                        <h4 style="color: #6b5b5b;">Phase 1: Googleカレンダー連携（2週間）</h4>
+                    </div>
+                    <ul style="list-style: none; padding-left: 20px; font-size: 14px; color: #666;">
+                        <li>• オーナー側のGoogleカレンダー同期</li>
+                        <li>• お客様向けカレンダー追加機能</li>
+                        <li>• icsファイル生成</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                        <span style="background: #ffc107; color: #333; padding: 5px 15px; border-radius: 20px; font-size: 12px;">優先度: 中</span>
+                        <h4 style="color: #6b5b5b;">Phase 2: 空き枠カレンダー自動生成（3週間）</h4>
+                    </div>
+                    <ul style="list-style: none; padding-left: 20px; font-size: 14px; color: #666;">
+                        <li>• テンプレートデザイン作成</li>
+                        <li>• 画像自動生成機能</li>
+                        <li>• LINE/SNS配信連携</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                        <span style="background: #28a745; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px;">優先度: 追加</span>
+                        <h4 style="color: #6b5b5b;">Phase 3: 高度な機能（将来）</h4>
+                    </div>
+                    <ul style="list-style: none; padding-left: 20px; font-size: 14px; color: #666;">
+                        <li>• AIによる空き時間の最適化提案</li>
+                        <li>• 複数スタッフ対応</li>
+                        <li>• 売上予測機能</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
