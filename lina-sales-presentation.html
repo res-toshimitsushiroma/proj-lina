@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINA - 美容サロン専用予約管理システム｜商品紹介資料</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #333;
+            line-height: 1.8;
+            background: #fff;
+        }
+        
+        /* ヘッダー */
+        .header {
+            background: linear-gradient(135deg, #f4b4a4 0%, #d4a574 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .tagline {
+            font-size: 20px;
+            opacity: 0.95;
+            margin-bottom: 30px;
+        }
+        
+        .header-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+        }
+        
+        /* メインコンテナ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* セクション */
+        .section {
+            margin-bottom: 80px;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            color: #d4a574;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #f4b4a4, #d4a574);
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+        
+        /* 問題提起セクション */
+        .problem-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .problem-card {
+            background: #fff;
+            border: 2px solid #fee;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .problem-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .problem-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .problem-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* ソリューション */
+        .solution-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #fff5f0 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+        
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .solution-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .solution-check {
+            color: #4caf50;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .solution-text {
+            flex: 1;
+        }
+        
+        .solution-text strong {
+            color: #d4a574;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        /* 機能紹介 */
+        .feature-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .feature-tab {
+            padding: 12px 30px;
+            background: #f5f5f5;
+            border: 2px solid transparent;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .feature-tab.active {
+            background: white;
+            border-color: #d4a574;
+            color: #d4a574;
+            font-weight: bold;
+        }
+        
+        .feature-content {
+            display: none;
+        }
+        
+        .feature-content.active {
+            display: block;
+        }
+        
+        .feature-detail {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        
+        .feature-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            display: block;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .feature-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .feature-point {
+            text-align: center;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 10px;
+        }
+        
+        .feature-point-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #d4a574;
+        }
+        
+        .feature-point-text {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* 価格セクション */
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s;
+        }
+        
+        .pricing-card.recommended {
+            border-color: #d4a574;
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(212,165,116,0.2);
+        }
+        
+        .pricing-card.recommended::before {
+            content: 'おすすめ';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #d4a574;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        
+        .pricing-plan {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .pricing-price {
+            font-size: 36px;
+            color: #d4a574;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .pricing-price small {
+            font-size: 14px;
+            color: #999;
+        }
+        
+        .pricing-period {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-button {
+            background: linear-gradient(135deg, #f4b4a4, #d4a574);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 25px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.3s;
+        }
+        
+        .pricing-button:hover {
+            opacity: 0.9;
+        }
+        
+        /* 導入ステップ */
+        .steps-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step-item {
+            display: flex;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #d4a574;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 20px;
+        }
+        
+        .step-content {
+            margin-left: 30px;
+            flex: 1;
+        }
+        
+        .step-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .step-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .step-duration {
+            display: inline-block;
+            background: #fff5f0;
+            color: #d4a574;
+            padding: 3px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        
+        /* お客様の声 */
+        .testimonial-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+        
+        .testimonial-text {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #f4b4a4, #d4a574);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .testimonial-info {
+            flex: 1;
+        }
+        
+        .testimonial-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        
+        .testimonial-role {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, #fff5f0, #fef9f5);
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            margin: 60px 0;
+        }
+        
+        .cta-title {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .cta-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .cta-button {
+            padding: 18px 50px;
+            font-size: 18px;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+        
+        .cta-button.primary {
+            background: linear-gradient(135deg, #f4b4a4, #d4a574);
+            color: white;
+        }
+        
+        .cta-button.secondary {
+            background: white;
+            color: #d4a574;
+            border: 2px solid #d4a574;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* 特徴バッジ */
+        .feature-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        
+        .feature-badge {
+            background: white;
+            border: 2px solid #d4a574;
+            color: #d4a574;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* 統計 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #d4a574;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 36px;
+            }
+            
+            .section-title {
+                font-size: 24px;
+            }
+            
+            .pricing-card.recommended {
+                transform: none;
+            }
+        }
+        
+        .highlight-text {
+            background: linear-gradient(to bottom, transparent 60%, #ffe0cc 60%);
+            padding: 0 3px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin: 40px 0;
+        }
+        
+        .comparison-table th {
+            background: #f9f9f9;
+            padding: 15px;
+            text-align: left;
+            font-weight: normal;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table .check {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .comparison-table .cross {
+            color: #dc3545;
+        }
+        
+        .comparison-table .highlight-column {
+            background: #fff5f0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header">
+        <h1 class="logo">LINA</h1>
+        <p class="tagline">小規模美容サロン専用 LINE連携型予約管理システム</p>
+        <div class="header-badges">
+            <span class="badge">✓ 初期費用無料</span>
+            <span class="badge">✓ 最短1週間導入</span>
+            <span class="badge">✓ 専用カスタマイズ</span>
+            <span class="badge">✓ LINE完全連携</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- 問題提起 -->
+        <section class="section">
+            <h2 class="section-title">こんなお悩みありませんか？</h2>
+            <p class="section-subtitle">1人で運営する美容サロンオーナー様の声</p>
+            
+            <div class="problem-cards">
+                <div class="problem-card">
+                    <div class="problem-icon">😰</div>
+                    <h3 class="problem-title">カレンダー作成が大変</h3>
+                    <p class="problem-desc">
+                        Canvaで空き枠カレンダーを作成中に予約が入り、作り直しの繰り返し。月10時間以上かかることも...
+                    </p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">📱</div>
+                    <h3 class="problem-title">予約管理が煩雑</h3>
+                    <p class="problem-desc">
+                        LINEやDM、電話など複数の経路から予約が入り、ダブルブッキングのリスクが常にある
+                    </p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">💔</div>
+                    <h3 class="problem-title">ドタキャンが多い</h3>
+                    <p class="problem-desc">
+                        お客様が予約を忘れてしまい、当日キャンセルが発生。売上機会を失ってしまう
+                    </p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">🎨</div>
+                    <h3 class="problem-title">施術記録の管理</h3>
+                    <p class="problem-desc">
+                        Before/Afterの写真や施術内容を整理する時間がなく、次回施術の参考にできない
+                    </p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">💰</div>
+                    <h3 class="problem-title">既存システムが高い</h3>
+                    <p class="problem-desc">
+                        大手予約システムは月額費用が高く、使わない機能ばかりでコスパが悪い
+                    </p>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-icon">👥</div>
+                    <h3 class="problem-title">お客様の利便性</h3>
+                    <p class="problem-desc">
+                        専用アプリのダウンロードはハードルが高く、予約完了までの離脱が多い
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ソリューション -->
+        <section class="section">
+            <h2 class="section-title">LINAが全て解決します</h2>
+            <p class="section-subtitle">あなたのサロン専用にカスタマイズした予約システム</p>
+            
+            <div class="solution-box">
+                <div class="solution-grid">
+                    <div class="solution-item">
+                        <span class="solution-check">✓</span>
+                        <div class="solution-text">
+                            <strong>空き枠カレンダー自動生成</strong>
+                            リアルタイムで更新される空き枠カレンダーを自動作成。作り直しゼロへ
+                        </div>
+                    </div>
+                    
+                    <div class="solution-item">
+                        <span class="solution-check">✓</span>
+                        <div class="solution-text">
+                            <strong>LINE完全連携</strong>
+                            お客様はLINEから簡単予約。アプリダウンロード不要で離脱率を大幅削減
+                        </div>
+                    </div>
+                    
+                    <div class="solution-item">
+                        <span class="solution-check">✓</span>
+                        <div class="solution-text">
+                            <strong>Googleカレンダー同期</strong>
+                            スマホの標準カレンダーで予約確認。お客様のカレンダーにも自動追加
+                        </div>
+                    </div>
+                    
+                    <div class="solution-item">
+                        <span class="solution-check">✓</span>
+                        <div class="solution-text">
+                            <strong>自動リマインド通知</strong>
+                            前日・当日の自動通知でドタキャン率50%削減を実現
+                        </div>
+                    </div>
+                    
+                    <div class="solution-item">
+                        <span class="solution-check">✓</span>
+                        <div class="solution-text">
+                            <strong>施術記録管理</strong>
+                            Before/After写真と動画を簡単保存。次回施術の質向上へ
+                        </div>
+                    </div>
+                    
+                    <div class="solution-item">
+                        <span class="solution-check">✓</span>
+                        <div class="solution-text">
+                            <strong>専用カスタマイズ</strong>
+                            あなたのサロンだけの予約システム。不要な機能なし、必要な機能だけ
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">10h→0h</div>
+                    <div class="stat-label">カレンダー作成時間/月</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50%削減</div>
+                    <div class="stat-label">ドタキャン率</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">30%向上</div>
+                    <div class="stat-label">リピート予約率</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">90%以上</div>
+                    <div class="stat-label">予約完了率</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 機能詳細 -->
+        <section class="section">
+            <h2 class="section-title">主要機能のご紹介</h2>
+            <p class="section-subtitle">シンプルで使いやすい、でも機能は充実</p>
+            
+            <div class="feature-tabs">
+                <button class="feature-tab active" onclick="showFeature('reservation')">予約管理</button>
+                <button class="feature-tab" onclick="showFeature('calendar')">カレンダー連携</button>
+                <button class="feature-tab" onclick="showFeature('line')">LINE連携</button>
+                <button class="feature-tab" onclick="showFeature('record')">施術記録</button>
+                <button class="feature-tab" onclick="showFeature('auto')">自動化機能</button>
+            </div>
+            
+            <div id="reservation" class="feature-content active">
+                <div class="feature-detail">
+                    <h3 style="color: #d4a574; margin-bottom: 20px;">📅 スマートな予約管理</h3>
+                    <p style="margin-bottom: 20px;">
+                        仮予約から本予約まで、すべての予約を一元管理。<span class="highlight-text">ダブルブッキングを完全防止</span>します。
+                    </p>
+                    <div class="feature-points">
+                        <div class="feature-point">
+                            <div class="feature-point-icon">📝</div>
+                            <div class="feature-point-text">仮予約→本予約の<br>2段階承認システム</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">🔔</div>
+                            <div class="feature-point-text">予約状態の<br>リアルタイム更新</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">📊</div>
+                            <div class="feature-point-text">週次・月次の<br>予約レポート</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">🎯</div>
+                            <div class="feature-point-text">メニュー別<br>時間管理</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="calendar" class="feature-content">
+                <div class="feature-detail">
+                    <h3 style="color: #d4a574; margin-bottom: 20px;">📱 革新的なカレンダー機能</h3>
+                    <p style="margin-bottom: 20px;">
+                        <span class="highlight-text">業界初！空き枠カレンダーの完全自動生成</span>と、オーナー・お客様双方のカレンダー連携を実現。
+                    </p>
+                    <div class="feature-points">
+                        <div class="feature-point">
+                            <div class="feature-point-icon">🎨</div>
+                            <div class="feature-point-text">空き枠カレンダー<br>自動生成・配信</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">📲</div>
+                            <div class="feature-point-text">Googleカレンダー<br>完全同期</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">🍎</div>
+                            <div class="feature-point-text">iPhone標準<br>カレンダー対応</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">👥</div>
+                            <div class="feature-point-text">お客様カレンダー<br>自動追加機能</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="line" class="feature-content">
+                <div class="feature-detail">
+                    <h3 style="color: #d4a574; margin-bottom: 20px;">💬 完璧なLINE連携</h3>
+                    <p style="margin-bottom: 20px;">
+                        お客様は<span class="highlight-text">普段使いのLINEから簡単予約</span>。リッチメニューから予約完了まで3タップで完了。
+                    </p>
+                    <div class="feature-points">
+                        <div class="feature-point">
+                            <div class="feature-point-icon">🎯</div>
+                            <div class="feature-point-text">リッチメニュー<br>カスタマイズ</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">💌</div>
+                            <div class="feature-point-text">Flexメッセージで<br>美しい通知</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">🔐</div>
+                            <div class="feature-point-text">LINEログインで<br>簡単認証</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">⏰</div>
+                            <div class="feature-point-text">自動リマインド<br>通知</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="record" class="feature-content">
+                <div class="feature-detail">
+                    <h3 style="color: #d4a574; margin-bottom: 20px;">📸 施術記録管理</h3>
+                    <p style="margin-bottom: 20px;">
+                        Before/After写真と動画を簡単管理。<span class="highlight-text">お客様ごとの施術履歴</span>で、サービス品質向上を実現。
+                    </p>
+                    <div class="feature-points">
+                        <div class="feature-point">
+                            <div class="feature-point-icon">📷</div>
+                            <div class="feature-point-text">写真5枚×2<br>簡単アップロード</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">🎥</div>
+                            <div class="feature-point-text">30秒動画×2<br>対応</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">📝</div>
+                            <div class="feature-point-text">施術メモ<br>機能</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">🔍</div>
+                            <div class="feature-point-text">顧客別<br>履歴検索</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="auto" class="feature-content">
+                <div class="feature-detail">
+                    <h3 style="color: #d4a574; margin-bottom: 20px;">🤖 充実の自動化機能</h3>
+                    <p style="margin-bottom: 20px;">
+                        面倒な作業はすべて自動化。<span class="highlight-text">オーナー様は施術に集中</span>できます。
+                    </p>
+                    <div class="feature-points">
+                        <div class="feature-point">
+                            <div class="feature-point-icon">📨</div>
+                            <div class="feature-point-text">予約確定<br>自動通知</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">⏰</div>
+                            <div class="feature-point-text">前日・当日<br>リマインド</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">📅</div>
+                            <div class="feature-point-text">空き枠カレンダー<br>自動更新</div>
+                        </div>
+                        <div class="feature-point">
+                            <div class="feature-point-icon">📊</div>
+                            <div class="feature-point-text">月次レポート<br>自動生成</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 他社比較 -->
+        <section class="section">
+            <h2 class="section-title">他社サービスとの比較</h2>
+            <p class="section-subtitle">LINAだけの特別な価値</p>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">機能</th>
+                        <th style="text-align: center;">一般的な予約システム</th>
+                        <th style="text-align: center;" class="highlight-column">LINA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>月額費用</td>
+                        <td style="text-align: center;">¥5,000〜30,000</td>
+                        <td style="text-align: center;" class="highlight-column">¥9,800（初期費用無料）</td>
+                    </tr>
+                    <tr>
+                        <td>空き枠カレンダー自動生成</td>
+                        <td style="text-align: center;" class="cross">×</td>
+                        <td style="text-align: center;" class="highlight-column check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>LINE連携</td>
+                        <td style="text-align: center;">△（制限あり）</td>
+                        <td style="text-align: center;" class="highlight-column check">✓ 完全対応</td>
+                    </tr>
+                    <tr>
+                        <td>Googleカレンダー同期</td>
+                        <td style="text-align: center;">△（一部のみ）</td>
+                        <td style="text-align: center;" class="highlight-column check">✓ 双方向同期</td>
+                    </tr>
+                    <tr>
+                        <td>お客様カレンダー追加</td>
+                        <td style="text-align: center;" class="cross">×</td>
+                        <td style="text-align: center;" class="highlight-column check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>施術記録管理</td>
+                        <td style="text-align: center;">△（テキストのみ）</td>
+                        <td style="text-align: center;" class="highlight-column check">✓ 写真・動画対応</td>
+                    </tr>
+                    <tr>
+                        <td>専用カスタマイズ</td>
+                        <td style="text-align: center;" class="cross">×</td>
+                        <td style="text-align: center;" class="highlight-column check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>アプリダウンロード</td>
+                        <td style="text-align: center;">必要</td>
+                        <td style="text-align: center;" class="highlight-column check">不要（LINE利用）</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- 料金プラン -->
+        <section class="section">
+            <h2 class="section-title">料金プラン</h2>
+            <p class="section-subtitle">シンプルで分かりやすい価格設定</p>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3 class="pricing-plan">ライトプラン</h3>
+                    <div class="pricing-price">¥7,800<small>/月</small></div>
+                    <p class="pricing-period">基本機能のみ</p>
+                    <ul class="pricing-features">
+                        <li>✓ 予約管理機能</li>
+                        <li>✓ LINE連携</li>
+                        <li>✓ 自動通知機能</li>
+                        <li>✓ 月間予約数 100件まで</li>
+                        <li>- カレンダー自動生成</li>
+                        <li>- 施術記録管理</li>
+                    </ul>
+                    <button class="pricing-button">詳細を見る</button>
+                </div>
+                
+                <div class="pricing-card recommended">
+                    <h3 class="pricing-plan">スタンダードプラン</h3>
+                    <div class="pricing-price">¥9,800<small>/月</small></div>
+                    <p class="pricing-period">全機能利用可能</p>
+                    <ul class="pricing-features">
+                        <li>✓ 予約管理機能</li>
+                        <li>✓ LINE完全連携</li>
+                        <li>✓ 空き枠カレンダー自動生成</li>
+                        <li>✓ Googleカレンダー同期</li>
+                        <li>✓ 施術記録管理（写真・動画）</li>
+                        <li>✓ 月間予約数 無制限</li>
+                    </ul>
+                    <button class="pricing-button">お申し込み</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3 class="pricing-plan">プレミアムプラン</h3>
+                    <div class="pricing-price">¥14,800<small>/月</small></div>
+                    <p class="pricing-period">複数スタッフ対応</p>
+                    <ul class="pricing-features">
+                        <li>✓ スタンダードの全機能</li>
+                        <li>✓ スタッフ3名まで登録可能</li>
+                        <li>✓ 売上分析機能</li>
+                        <li>✓ 顧客分析レポート</li>
+                        <li>✓ 優先サポート</li>
+                        <li>✓ カスタム開発相談</li>
+                    </ul>
+                    <button class="pricing-button">詳細を見る</button>
+                </div>
+            </div>
+            
+            <div class="feature-badges">
+                <span class="feature-badge">初期費用 ¥0</span>
+                <span class="feature-badge">契約期間縛りなし</span>
+                <span class="feature-badge">14日間無料トライアル</span>
+            </div>
+        </section>
+        
+        <!-- 導入の流れ -->
+        <section class="section">
+            <h2 class="section-title">導入までの流れ</h2>
+            <p class="section-subtitle">最短1週間でスタート可能</p>
+            
+            <div class="steps-timeline">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">お問い合わせ・ヒアリング</h3>
+                        <p class="step-desc">
+                            まずはお気軽にお問い合わせください。サロンの規模、メニュー、現在のお悩みなどをお聞きします。オンラインでの打ち合わせも可能です。
+                        </p>
+                        <span class="step-duration">所要時間: 30分</span>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">カスタマイズ設計</h3>
+                        <p class="step-desc">
+                            お伺いした内容を基に、あなたのサロン専用の予約システムを設計。メニュー設定、予約枠、デザインなどを決定します。
+                        </p>
+                        <span class="step-duration">1〜2営業日</span>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">LINE連携設定</h3>
+                        <p class="step-desc">
+                            LINE公式アカウントとの連携設定を行います。リッチメニューの作成、自動応答メッセージの設定もお任せください。
+                        </p>
+                        <span class="step-duration">1営業日</span>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">テスト運用</h3>
+                        <p class="step-desc">
+                            実際の予約フローをテスト。操作方法のレクチャーも行います。ご不明な点は何度でもご質問ください。
+                        </p>
+                        <span class="step-duration">2〜3日</span>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3 class="step-title">本格運用開始</h3>
+                        <p class="step-desc">
+                            いよいよ本格運用スタート！運用開始後も安心のサポート体制でバックアップいたします。
+                        </p>
+                        <span class="step-duration">準備完了次第</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- お客様の声 -->
+        <section class="section">
+            <h2 class="section-title">導入サロン様の声</h2>
+            <p class="section-subtitle">実際にLINAを使っているオーナー様からの評価</p>
+            
+            <div class="testimonial-cards">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "カレンダー作成に毎月10時間以上かかっていたのが、完全自動化されて感動！空いた時間で新しいメニュー開発ができるようになりました。"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">A</div>
+                        <div class="testimonial-info">
+                            <div class="testimonial-name">A様</div>
+                            <div class="testimonial-role">アイラッシュサロン経営 / 東京都</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "お客様から「LINEで予約できるのが便利！」と好評です。ドタキャン率も半分以下になり、売上が安定しました。"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">B</div>
+                        <div class="testimonial-info">
+                            <div class="testimonial-name">B様</div>
+                            <div class="testimonial-role">ネイルサロン経営 / 大阪府</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "施術記録機能が素晴らしい！Before/Afterを見ながら、お客様一人ひとりに合った提案ができるようになりました。"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">C</div>
+                        <div class="testimonial-info">
+                            <div class="testimonial-name">C様</div>
+                            <div class="testimonial-role">眉毛サロン経営 / 福岡県</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA -->
+        <section class="cta-section">
+            <h2 class="cta-title">今すぐLINAを始めましょう</h2>
+            <p class="cta-subtitle">
+                14日間の無料トライアルで、まずは効果を実感してください<br>
+                初期費用0円、いつでも解約可能です
+            </p>
+            
+            <div class="cta-buttons">
+                <a href="#" class="cta-button primary">無料トライアルを始める</a>
+                <a href="#" class="cta-button secondary">資料をダウンロード</a>
+            </div>
+            
+            <p style="margin-top: 30px; font-size: 14px; color: #999;">
+                ※ クレジットカード登録不要<br>
+                ※ 自動的に課金されることはありません
+            </p>
+        </section>
+        
+        <!-- お問い合わせ -->
+        <section class="section">
+            <h2 class="section-title">よくあるご質問</h2>
+            
+            <div style="max-width: 800px; margin: 0 auto;">
+                <details style="margin-bottom: 20px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <summary style="cursor: pointer; font-weight: bold; color: #333;">Q. 導入にはどれくらいの期間がかかりますか？</summary>
+                    <p style="margin-top: 15px; color: #666; font-size: 14px;">
+                        通常、お申し込みから1週間程度で本格運用を開始できます。LINE連携の設定やカスタマイズの内容により前後する場合があります。
+                    </p>
+                </details>
+                
+                <details style="margin-bottom: 20px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <summary style="cursor: pointer; font-weight: bold; color: #333;">Q. LINE公式アカウントは必要ですか？</summary>
+                    <p style="margin-top: 15px; color: #666; font-size: 14px;">
+                        はい、LINE連携機能をご利用いただくにはLINE公式アカウント（無料プラン可）が必要です。アカウントの作成からサポートいたします。
+                    </p>
+                </details>
+                
+                <details style="margin-bottom: 20px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <summary style="cursor: pointer; font-weight: bold; color: #333;">Q. パソコンが苦手でも使えますか？</summary>
+                    <p style="margin-top: 15px; color: #666; font-size: 14px;">
+                        はい、スマートフォンだけで全ての操作が可能です。シンプルで直感的な画面設計なので、どなたでも簡単にお使いいただけます。
+                    </p>
+                </details>
+                
+                <details style="margin-bottom: 20px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <summary style="cursor: pointer; font-weight: bold; color: #333;">Q. 既存の予約データは移行できますか？</summary>
+                    <p style="margin-top: 15px; color: #666; font-size: 14px;">
+                        はい、ExcelやCSVファイルからのデータ移行に対応しています。移行作業もサポートいたしますのでご安心ください。
+                    </p>
+                </details>
+                
+                <details style="margin-bottom: 20px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <summary style="cursor: pointer; font-weight: bold; color: #333;">Q. サポート体制はどうなっていますか？</summary>
+                    <p style="margin-top: 15px; color: #666; font-size: 14px;">
+                        メール、LINE、電話でのサポートを行っています。操作方法から活用方法まで、専門スタッフが丁寧にサポートいたします。
+                    </p>
+                </details>
+            </div>
+        </section>
+    </div>
+    
+    <!-- フッター -->
+    <footer style="background: #333; color: white; padding: 40px 20px; text-align: center;">
+        <div class="container">
+            <h2 style="font-size: 24px; margin-bottom: 20px;">お問い合わせはこちら</h2>
+            <p style="font-size: 28px; margin-bottom: 10px;">📞 03-1234-5678</p>
+            <p style="font-size: 16px; margin-bottom: 30px;">受付時間: 平日 10:00-18:00</p>
+            <p style="font-size: 14px; opacity: 0.8;">
+                © 2024 LINA - 美容サロン専用予約管理システム
+            </p>
+        </div>
+    </footer>
+    
+    <script>
+        function showFeature(feature) {
+            // すべてのタブとコンテンツを非アクティブにする
+            const tabs = document.querySelectorAll('.feature-tab');
+            const contents = document.querySelectorAll('.feature-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // 選択されたタブとコンテンツをアクティブにする
+            event.target.classList.add('active');
+            document.getElementById(feature).classList.add('active');
+        }
+    </script>
+</body>
+</html>
